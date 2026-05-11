@@ -9,17 +9,22 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = True
 Option Explicit
 
-Sub AlleZeilenEinblenden()
+' If you want to change LiSTOT code, you need to know a couple of things which will be explained in the comments.
+' One of these is that you have to press the right click command "show" for tall the hidden parts of the sheets to see
+' where the datas are taken from.
+
+' Show the hidden rows in this sheet, there is a table for the functions there.
+Sub ShowHiddenRows()
   ActiveSheet.Rows.Hidden = False
 End Sub
 
 Sub calculatesystemproperties()
 
 'Call the subs calculating entries in the technology sheet
-Worksheets("User Interface").Protect UserInterfaceOnly:=True
+'Worksheets("User Interface").Protect UserInterfaceOnly:=True
 Application.ScreenUpdating = False
 
-    Call Modul1.calcsystemprops
+Call Modul1.calcsystemprops
 
 Application.ScreenUpdating = True
 With ThisWorkbook.Worksheets("User Interface").Activate
@@ -37,7 +42,7 @@ End Sub
 
 Sub usersguide()
 
-    Worksheets("User Interface").Protect UserInterfaceOnly:=True
+    'Worksheets("User Interface").Protect UserInterfaceOnly:=True
     UG_Handbook.Width = 550
     UG_Handbook.Height = 500
     UG_Handbook.Show
@@ -48,7 +53,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
 
 'This sub informs the user, whether a user defined schedule is already available so that the user does not use a previously defined schedule that may be inappropriate
 
-Worksheets("User Interface").Protect UserInterfaceOnly:=True
+'Worksheets("User Interface").Protect UserInterfaceOnly:=True
 Worksheets("Schedule and Metabolic").Protect UserInterfaceOnly:=True
 
 'Check if cell entry has changed

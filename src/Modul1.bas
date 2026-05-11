@@ -2,7 +2,7 @@ Attribute VB_Name = "Modul1"
 ' global variable which stores the conversion of rows from the mission specific technology sheet, to the rows of the technology sheet
 Option Explicit
 
-Dim MissionSpecificRowToTechnologyRow(1 To 300) As Integer
+Dim MissionSpecificRowToTechnologyRow(1 To 800) As Integer
 
 
 ' Execution order of these subs is:
@@ -245,7 +245,7 @@ For iTank = 0 To UBound(TankSystemNames)
     
     CurrentRow = findRowByName(Array(BaseTankSystemName(iTank)), "Technology", iNameColumn)
     iCurrentRow = CurrentRow(1)
-    ' now we copy the relevant entries into the mission specific technology sheet. It is important to note, that the cell index i refers to the sheet "Technolog" and the index iMissionSpecific to the MissionSpecificTechnologyValues
+    ' now we copy the relevant entries into the mission specific technology sheet. It is important to note, that the cell index i refers to the sheet "Technology" and the index iMissionSpecific to the MissionSpecificTechnologyValues
     For iHeader = 1 To UBound(miTechnologyColumnToCopy)
         Worksheets("MissionSpecificTechnologyValues").Cells(iMissionSpecific, miMissionSpecificColumnToCopy(iHeader)).Value = Worksheets("Technology").Cells(iCurrentRow, miTechnologyColumnToCopy(iHeader)).Value
     Next iHeader
@@ -285,13 +285,13 @@ If SystemLevelFilter(0) = "both" Then
 End If
 
 'Get number of entries in technology sheet
-na = Worksheets("Technology").Range("A1:A1000").Cells.SpecialCells(xlCellTypeConstants).Count + 1
-    
+'na = Worksheets("Technology").Range("A1:A1000").Cells.SpecialCells(xlCellTypeConstants).Count + 1
+na = Worksheets("Technology").Cells(Rows.Count, 1).End(xlUp).row
     
 
 ' First we reset the global variable
-For i = 1 To 300
-    MissionSpecificRowToTechnologyRow(1) = 0
+For i = 1 To 800
+    MissionSpecificRowToTechnologyRow(i) = 0
 Next i
     
 ' Now calculate the values for the remaining assemblies:
@@ -358,7 +358,7 @@ For i = 3 To na
     
 NextIteration:
 Next i
-
+    
 ' After calculation all values, we can perform the ESM calculation subroutine
 esmcalc "MissionSpecificTechnologyValues"
 
