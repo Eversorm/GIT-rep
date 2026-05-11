@@ -9,6 +9,12 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = True
 Option Explicit
 
+' Iniatialize the ECLSS composition scheme every time the file opens
+Private Sub Workbook_Open()
+    Tabelle4.CreateDropDownLists
+End Sub
+
+' Save all the VBA codes in 'src' folder
 Private Sub Workbook_AfterSave(ByVal Success As Boolean)
     Dim comp As Object
     Dim exportPath As String
