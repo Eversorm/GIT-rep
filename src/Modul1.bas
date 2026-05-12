@@ -2,7 +2,7 @@ Attribute VB_Name = "Modul1"
 ' global variable which stores the conversion of rows from the mission specific technology sheet, to the rows of the technology sheet
 Option Explicit
 
-Dim MissionSpecificRowToTechnologyRow(1 To 800) As Integer
+Public MissionSpecificRowToTechnologyRow(1 To 800) As Integer
 
 
 ' Execution order of these subs is:
@@ -290,9 +290,9 @@ na = Worksheets("Technology").Cells(Rows.Count, 1).End(xlUp).row
     
 
 ' First we reset the global variable
-For i = 1 To 800
-    MissionSpecificRowToTechnologyRow(i) = 0
-Next i
+'For i = 1 To 800
+ '   MissionSpecificRowToTechnologyRow(i) = 0
+'Next i
     
 ' Now calculate the values for the remaining assemblies:
 ' Important, the index i references the rows in the "Technology" worksheet, while the index iMissionSpecific references the rows in the "MissionSpecificTechnologyValues"
