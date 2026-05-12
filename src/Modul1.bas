@@ -606,36 +606,41 @@ Function getTechnologyValues(Technology As Variant, CrewValues As Variant) As Va
     ' Define BVAD metabolic values
     'Metabolic Needs
     ' Values from NASA Baseline Values and Assumptions Document (BVAD)
-    Dim BVAD_O2_Con As Double 'O2 Consumption in [kg/CM*d]
-    Dim BVAD_CO2_Pro As Double 'CO2 Production [kg/CM*d]
-    Dim BVAD_urine As Double 'urine Production in [kg/CM*d]
-    Dim BVAD_potable As Double 'potable water Need in [kg/CM*d]
-    Dim BVAD_hygiene As Double 'hygiene water Need in [kg/CM*d]
-    Dim BVAD_feces As Double 'feces Production in [kg/CM*d]
-    Dim BVAD_avg_swe_vapr As Double 'average sweat and vpr Production in [kg/CM*d]
-    Dim BVAD_peak_swe_vapr As Double 'peak sweat and vpr Production in [kg/CM*h]
-    Dim BVAD_heat As Double 'heat Production in [kJ/CM*d]
-    Dim BVAD_peak_heat As Double 'heat Production in [kJ/CM*h]
+   ' Legacy Metabolic Needs Declarations (Commented out)
+' Dim BVAD_O2_Con As Double 'O2 Consumption in [kg/CM*d]
+' Dim BVAD_CO2_Pro As Double 'CO2 Production [kg/CM*d]
+' Dim BVAD_urine As Double 'urine Production in [kg/CM*d]
+' Dim BVAD_potable As Double 'potable water Need in [kg/CM*d]
+' Dim BVAD_hygiene As Double 'hygiene water Need in [kg/CM*d]
+' Dim BVAD_feces As Double 'feces Production in [kg/CM*d]
+' Dim BVAD_avg_swe_vapr As Double 'average sweat and vpr Production in [kg/CM*d]
+' Dim BVAD_peak_swe_vapr As Double 'peak sweat and vpr Production in [kg/CM*h]
+' Dim BVAD_heat As Double 'heat Production in [kJ/CM*d]
+' Dim BVAD_peak_heat As Double 'heat Production in [kJ/CM*h]
+
     Dim BVAD_H2O_Con As Double 'Total amount of H2O consumed (potable+hygiene+rehydration)
     Dim BVAD_H2O_Pro As Double 'Total amount of Waste water produced (urine+hygiene+sweat)
-    Dim BVAD_food As Double 'Total amount of Waste water produced (urine+hygiene+sweat)
+  
     
     'Metabolic needs assignement
     ' BVAD values from table 3.26 Summary of Nominal Human Metabolic Interface Values except for hygiene water which is based on
     ' Table 4.21 Typical Steady-State Water Usage Rates for Various Missions
-    BVAD_O2_Con = 0.816
-    BVAD_CO2_Pro = 1.04
-    BVAD_urine = 1.6
-    BVAD_potable = 2.5
-    BVAD_hygiene = 0.7 ' up to 7.32 for mature planetary bases
-    BVAD_feces = 0.132
-    BVAD_avg_swe_vapr = 1.9
-    BVAD_peak_swe_vapr = 0.77 ' from Table 3.22 Crew Induced Metabolic Loads only value per h and not per day
-    BVAD_heat = 12000
-    BVAD_peak_heat = 2974 ' from Table 3.22 Crew Induced Metabolic Loads only value per h and not per day
+    
+    ' Legacy Metabolic Needs Assignment (Commented out)
+' BVAD_O2_Con = 0.816
+' BVAD_CO2_Pro = 1.04
+' BVAD_urine = 1.6
+' BVAD_potable = 2.5
+' BVAD_hygiene = 0.7 ' up to 7.32 for mature planetary bases
+' BVAD_feces = 0.132
+' BVAD_avg_swe_vapr = 1.9
+' BVAD_peak_swe_vapr = 0.77 ' from Table 3.22 Crew Induced Metabolic Loads only value per h and not per day
+' BVAD_heat = 12000
+' BVAD_peak_heat = 2974 ' from Table 3.22 Crew Induced Metabolic Loads only value per h and not per day
+
     BVAD_H2O_Con = (BVAD_potable + BVAD_hygiene) * mission_duration * Crew_Size
     BVAD_H2O_Pro = (BVAD_hygiene + BVAD_avg_swe_vapr + BVAD_urine) * mission_duration * Crew_Size
-    BVAD_food = 1.51
+  
 
     '---------------------------------------------------------------------------------------------------------------------
     ' Define scaling factors from inputs

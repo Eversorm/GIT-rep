@@ -432,29 +432,7 @@ Dim CO2_toRemoval  As Double
 Dim H2O_toHumidityControl  As Double
 
 '-------------------------------------------------------------------------------------------------------------------------------------------------------------
-' Molar Mass Definitions
 
-Dim MolarMassH2 As Double
-Dim MolarMassO2 As Double
-Dim MolarMassH2O As Double
-Dim MolarMassC As Double
-Dim MolarMassCO2 As Double
-Dim MolarMassCH4 As Double
-Dim MolarMassC6H12O6 As Double
-Dim MolarMassLiOH As Double
-Dim MolarMassLi2CO3 As Double
-Dim MolarMassC2H2 As Double
-
-MolarMassH2 = 2.01588 / 1000
-MolarMassO2 = 31.9988 / 1000
-MolarMassH2O = 18.0153 / 1000
-MolarMassC = 12.0107 / 1000
-MolarMassCO2 = 44.0095 / 1000
-MolarMassCH4 = 16.0425 / 1000
-MolarMassC6H12O6 = 180.1559 / 1000
-MolarMassLiOH = 23.948 / 1000
-MolarMassLi2CO3 = 73.891 / 1000
-MolarMassC2H2 = 26.038 / 1000
 
 
 '-------------------------------------------------------------------------------------------------------------------------------------------------------------
