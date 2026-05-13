@@ -1356,23 +1356,12 @@ CurrentO2 = 21 ' kPa
 CurrentHumidity = 0.5
 CurrentTemperature = 293 ' K
 
-Dim MolarMassCO2 As Double
-Dim MolarMassO2 As Double
-Dim MolarMassH2O As Double
-Dim MolarMassAir As Double
-Dim IdealGasConst As Double
 Dim HeatCapacityAir As Double
 Dim CabinMassAir As Double
 Dim AntoineA As Double
 Dim AntoineB As Double
 Dim AntoineC As Double
 
-MolarMassO2 = 31.9988 / 1000
-MolarMassH2O = 18.0153 / 1000
-MolarMassCO2 = 44.0095 / 1000
-MolarMassAir = 28.949 / 1000
-
-IdealGasConst = 8.31446261815324
 
 HeatCapacityAir = 1005 ' kJ/kg K
 

@@ -7,16 +7,21 @@ Option Explicit
 
 ' Stoichiometric values for the needed compounds
 
-Public Const MolarMassH2 As Double = 2.01588 / 1000
+Public Const MolarMassH2 As Double = 2.01588 / 1000     ' kg/mol
 Public Const MolarMassO2 As Double = 31.9988 / 1000
 Public Const MolarMassH2O As Double = 18.0153 / 1000
 Public Const MolarMassC As Double = 12.0107 / 1000
 Public Const MolarMassCO2 As Double = 44.0095 / 1000
 Public Const MolarMassCH4 As Double = 16.0425 / 1000
+Public Const MolarMassN2 As Double = 28.0134 / 1000
+Public Const MolarMassAir As Double = 28.949 / 1000
+
 Public Const MolarMassC6H12O6 As Double = 180.1559 / 1000
 Public Const MolarMassLiOH As Double = 23.948 / 1000
 Public Const MolarMassLi2CO3 As Double = 73.891 / 1000
 Public Const MolarMassC2H2 As Double = 26.038 / 1000
+
+Public Const IdealGasConst As Double = 8.31446261815324     ' [J/(mol*K)]
 
 
 ' NASA Baseline Values and Assumptions Document (BVAD) - Metabolic Constants

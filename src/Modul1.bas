@@ -153,20 +153,14 @@ TankValues = calculateLeakage
 O2_leakage = TankValues(1) * mission_duration
 N2_leakage = TankValues(2) * mission_duration
 
-Dim MM_O2 As Double
-Dim MM_N2 As Double
-Dim r As Double
+
 Dim pp_O2 As Double
 Dim pp_N2 As Double
-
-MM_N2 = 28.0134 / 1000
-MM_O2 = 31.9988 / 1000
-r = 8.314472 '[J/K*mol] 'gas constant
 pp_O2 = 21.3 * 10 ^ 3 '[Pa] 'partial pressure O2
 pp_N2 = 79.76 * 10 ^ 3 '[Pa] 'partial pressure N2
 
-O2_decompression = (pp_O2 / ((r / MM_O2) * 293)) * Pressurized_volume
-N2_decompression = (pp_N2 / ((r / MM_N2) * 293)) * Pressurized_volume
+O2_decompression = (pp_O2 / ((IdealGasConst / MolarMassO2) * 293)) * Pressurized_volume
+N2_decompression = (pp_N2 / ((IdealGasConst / MolarMassN2) * 293)) * Pressurized_volume
 
 ' Now we calculate the required tank masses and volume
 O2MassForCrew = (O2_leakage + O2_Con * Crew_Size) * mission_duration
@@ -368,10 +362,7 @@ Function calculateLeakage() As Variant
 
 Dim Pressurized_volume As Double
 Dim NumberOfModules As Integer
-Dim MM_O2 As Double
-Dim MM_N2 As Double
-Dim MM_Air As Double
-Dim r As Double
+
 Dim pp_O2 As Double
 Dim pp_N2 As Double
 Dim fDensityAir As Double
@@ -388,20 +379,20 @@ Pressurized_volume = ThisWorkbook.Worksheets("User Interface").Range("Pressurize
 ' Uses values from P.Plötners Diplomarbeit page 45 for the leakage pr module and adapter between modules. For modules, the leak rate from US Lab (0.002722 kg/day) is divided with the pressurized volume of US Lab (97.71 m^3) to calculate a leak rate per pressurized volume.
 ' The number of modules adds verstibulares between the modules which have a leakrate of 0.000122 kg/day. The leakrates are converted to m^3 / day to estimate the influence of total pressure on the leakage
 ' In addition a oxygen partial pressure of 21.3 kPa is assumed regardless of overall atmospheric pressure, currently the N2 pressure is assumed fix at 79.76 as habitat pressure is no trade off parameter in LiSTOT at the moment
-MM_Air = 0.028949 '[kg/mol]
-MM_N2 = 28.0134 / 1000
-MM_O2 = 31.9988 / 1000
-r = 8.314472 '[J/K*mol] 'gas constant
+
+
+
+
 pp_O2 = 21.3 * 10 ^ 3 '[Pa] 'partial pressure O2
 pp_N2 = 79.76 * 10 ^ 3 '[Pa] 'partial pressure N2
 
-fDensityAir = 101325 / ((r / MM_Air) * 293)
+fDensityAir = 101325 / ((IdealGasConst / MolarMassAir) * 293)
 fSpecificLeakRate = (0.002722 / fDensityAir) / 97.71 ' [(m^3/day)/m^3]
 fLeakRatePerVestibular = (0.000122 / fDensityAir)
 fTotalLeakRate = fSpecificLeakRate * Pressurized_volume + (NumberOfModules - 1) * fLeakRatePerVestibular
 
-O2_leakage = fTotalLeakRate * pp_O2 / ((r / MM_O2) * 293)  '[kg/d]
-N2_leakage = fTotalLeakRate * pp_N2 / ((r / MM_N2) * 293)  '[kg/d]
+O2_leakage = fTotalLeakRate * pp_O2 / ((IdealGasConst / MolarMassO2) * 293)  '[kg/d]
+N2_leakage = fTotalLeakRate * pp_N2 / ((IdealGasConst / MolarMassN2) * 293)  '[kg/d]
 
 Dim Leakage(1 To 2) As Double
 
