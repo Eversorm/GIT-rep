@@ -29,7 +29,7 @@ Sub matrixcheck()
 '________________________________________________________________________________________
 
 Dim lastcolumn
-Dim lastrow
+Dim lastRow
 Dim cell
 Dim row
 Dim answer As Long
@@ -44,16 +44,16 @@ Application.ScreenUpdating = False
 
 row = 33
 lastcolumn = Cells(33, Columns.Count).End(xlToLeft).Column
-lastrow = Cells(Rows.Count, 1).End(xlUp).row
+lastRow = Cells(Rows.Count, 1).End(xlUp).row
 na = Range("B7").Value
-n = lastrow - 31
+n = lastRow - 31
 
 If Range("C31").Interior.ColorIndex = 2 Then
     MsgBox ("Nothing to check!")
     Exit Sub
 End If
 
-    For Each cell In Range(Cells(row, lastcolumn), Cells(lastrow - 1, lastcolumn))
+    For Each cell In Range(Cells(row, lastcolumn), Cells(lastRow - 1, lastcolumn))
     
         If cell.Value = "" Then
             MsgBox ("Transportation capability for Flight " & cell.row - 30 & " must be inserted before proceeding")
@@ -72,7 +72,7 @@ End If
     
     Next
 
-    For Each cell In Range(Cells(lastrow, 3), Cells(lastrow, lastcolumn - 1))
+    For Each cell In Range(Cells(lastRow, 3), Cells(lastRow, lastcolumn - 1))
     
         If cell.Interior.ColorIndex <> 4 Then
             MsgBox ("There is mass remaining for Mission ") & cell.Column - 2
@@ -91,7 +91,7 @@ answer = MsgBox("Do you want to plot the resupply dependancy matrix?" & vbNewLin
 
 'Delete previous dependancy matrix
 
-Set rng = Range(Cells(lastrow + 2, 3), Cells(2 * lastrow - 29, na + 4))
+Set rng = Range(Cells(lastRow + 2, 3), Cells(2 * lastRow - 29, na + 4))
 
     For Each cell In rng
         cell.Clear
@@ -103,14 +103,14 @@ Set rng = Range(Cells(lastrow + 2, 3), Cells(2 * lastrow - 29, na + 4))
 
 Worksheets("Resupply Approach").Protect UserInterfaceOnly:=True
 
-Set rng = Range(Cells(row, 3), Cells(lastrow - 1, lastcolumn - 1))
+Set rng = Range(Cells(row, 3), Cells(lastRow - 1, lastcolumn - 1))
     rng.Locked = True
 
 'Plot dependancy matrix
 
 For i = 1 To na
 
-    With Cells(lastrow + 2, 2 + i)
+    With Cells(lastRow + 2, 2 + i)
         .Value = "Mission" & " " & i
         .HorizontalAlignment = xlCenter
         .VerticalAlignment = xlCenter
@@ -122,7 +122,7 @@ For i = 1 To na
         .Borders.Weight = xlThin
     End With
 
-    With Cells(lastrow + 2 + i, 2)
+    With Cells(lastRow + 2 + i, 2)
         .Value = "Flight" & " " & i
         .HorizontalAlignment = xlCenter
         .VerticalAlignment = xlCenter
@@ -140,7 +140,7 @@ If n > na Then
 
     For i = 1 To n - na
 
-         With Cells(lastrow + 2 + na + i, 2)
+         With Cells(lastRow + 2 + na + i, 2)
             .Value = "Flight" & " " & na + i
             .HorizontalAlignment = xlCenter
             .VerticalAlignment = xlCenter
@@ -155,7 +155,7 @@ If n > na Then
     Next
 
 End If
-Set rng = Range(Cells(lastrow + 3, na + 3), Cells(2 * lastrow - 29, na + 6))
+Set rng = Range(Cells(lastRow + 3, na + 3), Cells(2 * lastRow - 29, na + 6))
 
 With rng
         .Borders.ColorIndex = 1
@@ -166,7 +166,7 @@ With rng
         .Locked = True
 End With
 
-Set rng = Range(Cells(lastrow + 3, na + 3), Cells(2 * lastrow - 29, na + 6))
+Set rng = Range(Cells(lastRow + 3, na + 3), Cells(2 * lastRow - 29, na + 6))
 
 With rng
         .Borders.ColorIndex = 1
@@ -178,7 +178,7 @@ With rng
         .Locked = True
 End With
 
-With Cells(lastrow + 2, na + 4)
+With Cells(lastRow + 2, na + 4)
         .Value = "Dependency" & vbNewLine & "Factor (Sum)"
         .Font.Bold = True
         .HorizontalAlignment = xlCenter
@@ -189,7 +189,7 @@ With Cells(lastrow + 2, na + 4)
         .Borders.Weight = xlThin
 End With
 
-With Cells(lastrow + 2, na + 3)
+With Cells(lastRow + 2, na + 3)
         .Value = "Number of" & vbNewLine & "Mis. served"
         .Font.Bold = True
         .HorizontalAlignment = xlCenter
@@ -200,7 +200,7 @@ With Cells(lastrow + 2, na + 3)
         .Borders.Weight = xlThin
 End With
 
-Set rng = Range(Cells(lastrow + 3, 3), Cells(2 * lastrow - 29, na + 2))
+Set rng = Range(Cells(lastRow + 3, 3), Cells(2 * lastRow - 29, na + 2))
 
 With rng
         .Borders.ColorIndex = 1
@@ -211,7 +211,7 @@ With rng
         .NumberFormat = "0.00"
 End With
 
-With Cells(lastrow + 2, na + 5)
+With Cells(lastRow + 2, na + 5)
         .Value = "Flight Criti-" & vbNewLine & "cality Index"
         .Font.Bold = True
         .HorizontalAlignment = xlCenter
@@ -222,7 +222,7 @@ With Cells(lastrow + 2, na + 5)
         .Borders.Weight = xlThin
 End With
 
-With Cells(lastrow + 2, na + 6)
+With Cells(lastRow + 2, na + 6)
         .Value = "Flight Criti-" & vbNewLine & "cality Rank"
         .Font.Bold = True
         .HorizontalAlignment = xlCenter
@@ -237,11 +237,11 @@ End With
 
 For i = 1 To na
 
-    Cells(lastrow + 2 + i, 3).Value = Cells(30 + i, 3).Value / Application.WorksheetFunction.RoundUp(Cells(24, 6 + i).Value, 1)
+    Cells(lastRow + 2 + i, 3).Value = Cells(30 + i, 3).Value / Application.WorksheetFunction.RoundUp(Cells(24, 6 + i).Value, 1)
     'If Cells(lastrow + 2 + i, 3).Value = 0 Then Cells(lastrow + 2 + i, 3).Value = ""
         For z = 1 To na
         
-            Cells(lastrow + 2 + i, 2 + z).Value = Cells(30 + i, 2 + z).Value / Application.WorksheetFunction.RoundUp(Cells(24, 6 + z).Value, 1)
+            Cells(lastRow + 2 + i, 2 + z).Value = Cells(30 + i, 2 + z).Value / Application.WorksheetFunction.RoundUp(Cells(24, 6 + z).Value, 1)
             'If Cells(lastrow + 2 + i, 2 + z).Value = 0 Then Cells(lastrow + 2 + i, 2 + z).Value = ""
         Next z
         
@@ -251,11 +251,11 @@ If n > na Then
 
     For i = 1 To n - na
     
-        Cells(lastrow + na + 2 + i, 3).Value = Cells(30 + na + i, 3).Value / Application.WorksheetFunction.RoundUp(Cells(24, 6 + i).Value, 1)
+        Cells(lastRow + na + 2 + i, 3).Value = Cells(30 + na + i, 3).Value / Application.WorksheetFunction.RoundUp(Cells(24, 6 + i).Value, 1)
         'If Cells(lastrow + na + 2 + i, 3).Value = 0 Then Cells(lastrow + na + 2 + i, 3).Value = ""
         For z = 1 To na
         
-            Cells(lastrow + na + 2 + i, 2 + z).Value = Cells(30 + na + i, 2 + z).Value / Application.WorksheetFunction.RoundUp(Cells(24, 6 + z).Value, 1)
+            Cells(lastRow + na + 2 + i, 2 + z).Value = Cells(30 + na + i, 2 + z).Value / Application.WorksheetFunction.RoundUp(Cells(24, 6 + z).Value, 1)
             'If Cells(lastrow + na + 2 + i, 2 + z).Value = 0 Then Cells(lastrow + na + 2 + i, 2 + z).Value = ""
         Next z
         
@@ -266,23 +266,23 @@ End If
 For i = 1 To n
     
     smbf = 0
-    For Each cell In Range(Cells(lastrow + 2 + i, 3), Cells(lastrow + 2 + i, na + 2))
+    For Each cell In Range(Cells(lastRow + 2 + i, 3), Cells(lastRow + 2 + i, na + 2))
         If cell.Value <> 0 Then smbf = smbf + 1
     Next cell
     
-    Cells(lastrow + 2 + i, na + 3).Value = smbf
-    Cells(lastrow + 2 + i, na + 3).NumberFormat = "0"
-    Cells(lastrow + 2 + i, na + 4).Value = Application.WorksheetFunction.Sum(Range(Cells(lastrow + 2 + i, 3), Cells(lastrow + 2 + i, na + 2)))
-    Cells(lastrow + 2 + i, na + 5).Value = ((Cells(lastrow + 2 + i, na + 3).Value) ^ 2 + (Cells(lastrow + 2 + i, na + 4).Value) ^ 2) ^ (0.5)
+    Cells(lastRow + 2 + i, na + 3).Value = smbf
+    Cells(lastRow + 2 + i, na + 3).NumberFormat = "0"
+    Cells(lastRow + 2 + i, na + 4).Value = Application.WorksheetFunction.Sum(Range(Cells(lastRow + 2 + i, 3), Cells(lastRow + 2 + i, na + 2)))
+    Cells(lastRow + 2 + i, na + 5).Value = ((Cells(lastRow + 2 + i, na + 3).Value) ^ 2 + (Cells(lastRow + 2 + i, na + 4).Value) ^ 2) ^ (0.5)
     
 Next i
 
-Set rng = Range(Cells(lastrow + 3, na + 5), Cells(2 * lastrow - 29, na + 5))
+Set rng = Range(Cells(lastRow + 3, na + 5), Cells(2 * lastRow - 29, na + 5))
 
 For i = 1 To n
 
-    Cells(lastrow + 2 + i, na + 6).Value = Application.Rank(Cells(lastrow + 2 + i, na + 5), rng)
-    Cells(lastrow + 2 + i, na + 6).NumberFormat = "0"
+    Cells(lastRow + 2 + i, na + 6).Value = Application.Rank(Cells(lastRow + 2 + i, na + 5), rng)
+    Cells(lastRow + 2 + i, na + 6).NumberFormat = "0"
     
 Next i
 

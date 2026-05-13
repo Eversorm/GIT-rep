@@ -1224,11 +1224,15 @@ MAX_Maintenance = Worksheets("User Interface").Range("MAX_Maintenance").Value
 DES_Function = Worksheets("User Interface").Range("DES_Function").Value
 
 Application.ScreenUpdating = False
+Worksheets("MCA ESM").Protect UserInterfaceOnly:=True
 
 'Deletion of previous MCA results
+Dim lastRowMCA As Long
+lastRowMCA = Worksheets("MCA ESM").Cells(Rows.Count, "A").End(xlUp).row
+If lastRowMCA >= 6 Then
+    Worksheets("MCA ESM").Range("A6:Z" & lastRowMCA).ClearContents
+End If
 
-Worksheets("MCA ESM").Protect UserInterfaceOnly:=True
-Worksheets("MCA ESM").Range("A6:Z20").ClearContents
 Worksheets("MCA ESM").Range("A3").ClearContents
 
 Dim cell

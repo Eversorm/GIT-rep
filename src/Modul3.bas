@@ -40,7 +40,7 @@ Sub ESMDiagramm()
 Dim MD
 Dim Dia_ESM As Chart
 Dim frame As ChartObject
-Dim lastrow
+Dim lastRow
 Dim WS As Worksheet
 Dim rng As Range
 Dim rg As Range
@@ -60,17 +60,17 @@ On Error Resume Next
 ThisWorkbook.Worksheets("Graphical Output").ChartObjects("ESM System Mass").Delete
 
     Set WS = Worksheets("Output Data")
-        lastrow = WS.Cells(WS.Rows.Count, "B").End(xlUp).row
-            If lastrow < 7 Then
+        lastRow = WS.Cells(WS.Rows.Count, "B").End(xlUp).row
+            If lastRow < 7 Then
             MsgBox ("Nothing to plot!")
             Exit Sub
             End If
 
 With Worksheets("Output Data").Activate
     
-    If Worksheets("Output Data").Range("C7") <> "" Then Set rng = Worksheets("Output Data").Range(Cells(7, "C"), Cells(lastrow, "G"))
-    If Worksheets("Output Data").Range("C7") = "" Then Set rng = Worksheets("Output Data").Range(Cells(7, "D"), Cells(lastrow, "G"))
-    If Worksheets("Output Data").Range("C7") = "" And Worksheets("Output Data").Range("D7") = "" Then Set rng = Worksheets("Output Data").Range(Cells(7, "E"), Cells(lastrow, "G"))
+    If Worksheets("Output Data").Range("C7") <> "" Then Set rng = Worksheets("Output Data").Range(Cells(7, "C"), Cells(lastRow, "G"))
+    If Worksheets("Output Data").Range("C7") = "" Then Set rng = Worksheets("Output Data").Range(Cells(7, "D"), Cells(lastRow, "G"))
+    If Worksheets("Output Data").Range("C7") = "" And Worksheets("Output Data").Range("D7") = "" Then Set rng = Worksheets("Output Data").Range(Cells(7, "E"), Cells(lastRow, "G"))
     
     For Each rg In rng
         If rg <> "" Then
@@ -95,7 +95,7 @@ If Worksheets("Output Data").Range("C7") <> "" Then
             .ChartType = xlXYScatterSmoothNoMarkers
             .HasLegend = True
             If Worksheets("Output Data").Range("C7") <> "" Then
-            .SeriesCollection(1).Values = Worksheets("Output Data").Range(Cells(7, "C"), Cells(lastrow, "C"))
+            .SeriesCollection(1).Values = Worksheets("Output Data").Range(Cells(7, "C"), Cells(lastRow, "C"))
             .SeriesCollection(1).Name = "=""Open Loop"""
             Else: Set ser1 = Dia_ESM.SeriesCollection(1)
                 With ser1.Format.Line
@@ -105,7 +105,7 @@ If Worksheets("Output Data").Range("C7") <> "" Then
             End If
             If Worksheets("Output Data").Range("D7") <> "" Then
             .SeriesCollection(2).Name = "=""Partial Loop"""
-            .SeriesCollection(2).Values = Worksheets("Output Data").Range(Cells(7, "D"), Cells(lastrow, "D"))
+            .SeriesCollection(2).Values = Worksheets("Output Data").Range(Cells(7, "D"), Cells(lastRow, "D"))
             Else: Set ser2 = Dia_ESM.SeriesCollection(2)
                 With ser2.Format.Line
                         .Visible = msoFalse
@@ -114,7 +114,7 @@ If Worksheets("Output Data").Range("C7") <> "" Then
             End If
             If Worksheets("Output Data").Range("E7") <> "" Then
             .SeriesCollection(3).Name = "=""Closed Loop"""
-            .SeriesCollection(3).Values = Worksheets("Output Data").Range(Cells(7, "E"), Cells(lastrow, "E"))
+            .SeriesCollection(3).Values = Worksheets("Output Data").Range(Cells(7, "E"), Cells(lastRow, "E"))
             Else: Set ser3 = Dia_ESM.SeriesCollection(3)
                 With ser3.Format.Line
                         .Visible = msoFalse
@@ -123,7 +123,7 @@ If Worksheets("Output Data").Range("C7") <> "" Then
             End If
             If Worksheets("Output Data").Range("F7") <> "" Then
             .SeriesCollection(4).Name = "=""Bioregenerative"""
-            .SeriesCollection(4).Values = Worksheets("Output Data").Range(Cells(7, "F"), Cells(lastrow, "F"))
+            .SeriesCollection(4).Values = Worksheets("Output Data").Range(Cells(7, "F"), Cells(lastRow, "F"))
             Else: Set ser4 = Dia_ESM.SeriesCollection(4)
                 With ser4.Format.Line
                         .Visible = msoFalse
@@ -132,7 +132,7 @@ If Worksheets("Output Data").Range("C7") <> "" Then
             End If
             If Worksheets("Output Data").Range("G7") <> "" Then
             .SeriesCollection(5).Name = "=""Hybrid"""
-            .SeriesCollection(5).Values = Worksheets("Output Data").Range(Cells(7, "G"), Cells(lastrow, "G"))
+            .SeriesCollection(5).Values = Worksheets("Output Data").Range(Cells(7, "G"), Cells(lastRow, "G"))
             Else: Set ser5 = Dia_ESM.SeriesCollection(5)
                 With ser5.Format.Line
                         .Visible = msoFalse
@@ -163,7 +163,7 @@ If Worksheets("Output Data").Range("C7") = "" Then
             .ChartType = xlXYScatterSmoothNoMarkers
             .HasLegend = True
             If Worksheets("Output Data").Range("D7") <> "" Then
-            .SeriesCollection(1).Values = Worksheets("Output Data").Range(Cells(7, "D"), Cells(lastrow, "D"))
+            .SeriesCollection(1).Values = Worksheets("Output Data").Range(Cells(7, "D"), Cells(lastRow, "D"))
             .SeriesCollection(1).Name = "=""Partial Loop"""
             Else: Set ser1 = Dia_ESM.SeriesCollection(1)
                 With ser1.Format.Line
@@ -173,7 +173,7 @@ If Worksheets("Output Data").Range("C7") = "" Then
             End If
             If Worksheets("Output Data").Range("E7") <> "" Then
             .SeriesCollection(2).Name = "=""Closed Loop"""
-            .SeriesCollection(2).Values = Worksheets("Output Data").Range(Cells(7, "E"), Cells(lastrow, "E"))
+            .SeriesCollection(2).Values = Worksheets("Output Data").Range(Cells(7, "E"), Cells(lastRow, "E"))
             Else: Set ser2 = Dia_ESM.SeriesCollection(2)
                 With ser2.Format.Line
                         .Visible = msoFalse
@@ -182,7 +182,7 @@ If Worksheets("Output Data").Range("C7") = "" Then
             End If
             If Worksheets("Output Data").Range("F7") <> "" Then
             .SeriesCollection(3).Name = "=""Bioregenerative"""
-            .SeriesCollection(3).Values = Worksheets("Output Data").Range(Cells(7, "F"), Cells(lastrow, "F"))
+            .SeriesCollection(3).Values = Worksheets("Output Data").Range(Cells(7, "F"), Cells(lastRow, "F"))
             Else: Set ser3 = Dia_ESM.SeriesCollection(3)
                 With ser3.Format.Line
                         .Visible = msoFalse
@@ -191,7 +191,7 @@ If Worksheets("Output Data").Range("C7") = "" Then
             End If
             If Worksheets("Output Data").Range("G7") <> "" Then
             .SeriesCollection(4).Name = "=""Hybrid"""
-            .SeriesCollection(4).Values = Worksheets("Output Data").Range(Cells(7, "G"), Cells(lastrow, "G"))
+            .SeriesCollection(4).Values = Worksheets("Output Data").Range(Cells(7, "G"), Cells(lastRow, "G"))
             Else: Set ser4 = Dia_ESM.SeriesCollection(4)
                 With ser4.Format.Line
                         .Visible = msoFalse
@@ -222,7 +222,7 @@ If Worksheets("Output Data").Range("C7") = "" And Worksheets("Output Data").Rang
             .ChartType = xlXYScatterSmoothNoMarkers
             .HasLegend = True
             If Worksheets("Output Data").Range("E7") <> "" Then
-            .SeriesCollection(1).Values = Worksheets("Output Data").Range(Cells(7, "E"), Cells(lastrow, "E"))
+            .SeriesCollection(1).Values = Worksheets("Output Data").Range(Cells(7, "E"), Cells(lastRow, "E"))
             .SeriesCollection(1).Name = "=""Closed Loop"""
             Else: Set ser1 = Dia_ESM.SeriesCollection(1)
                 With ser1.Format.Line
@@ -232,7 +232,7 @@ If Worksheets("Output Data").Range("C7") = "" And Worksheets("Output Data").Rang
             End If
             If Worksheets("Output Data").Range("F7") <> "" Then
             .SeriesCollection(2).Name = "=""Bioregenerative"""
-            .SeriesCollection(2).Values = Worksheets("Output Data").Range(Cells(7, "F"), Cells(lastrow, "F"))
+            .SeriesCollection(2).Values = Worksheets("Output Data").Range(Cells(7, "F"), Cells(lastRow, "F"))
             Else: Set ser2 = Dia_ESM.SeriesCollection(2)
                 With ser2.Format.Line
                         .Visible = msoFalse
@@ -241,7 +241,7 @@ If Worksheets("Output Data").Range("C7") = "" And Worksheets("Output Data").Rang
             End If
             If Worksheets("Output Data").Range("G7") <> "" Then
             .SeriesCollection(3).Name = "=""Hybrid"""
-            .SeriesCollection(3).Values = Worksheets("Output Data").Range(Cells(7, "G"), Cells(lastrow, "G"))
+            .SeriesCollection(3).Values = Worksheets("Output Data").Range(Cells(7, "G"), Cells(lastRow, "G"))
             Else: Set ser3 = Dia_ESM.SeriesCollection(3)
                 With ser3.Format.Line
                         .Visible = msoFalse

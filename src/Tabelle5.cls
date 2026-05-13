@@ -376,20 +376,23 @@ Sub sortBy(sInput As String)
 Dim na As Integer
 Dim miColumns
 Dim iColumn As Integer
+Dim lastRow As Long
 
 miColumns = findColumnByName(Array(sInput), "MCA ESM", 4)
 iColumn = miColumns(1)
 
 With ThisWorkbook.Worksheets("MCA ESM")
-
 Worksheets("MCA ESM").Protect UserInterfaceOnly:=True
-na = .Range("A6:A20").Cells.SpecialCells(xlCellTypeConstants).Count
+
+lastRow = .Cells(.Rows.Count, "A").End(xlUp).row
+If lastRow < 6 Then lastRow = 6
+na = .Range("A6:A" & lastRow).Cells.SpecialCells(xlCellTypeConstants).Count     ' count the number of tech
 
 If na > 1 Then
-
-    .Range("A6:Z20").Sort Key1:=Range(.Cells(1, iColumn).Address), Order1:=xlAscending, Header:=xlGuess
+    
+    .Range("A6:Z" & lastRow).Sort Key1:=.Cells(6, iColumn), Order1:=xlAscending, Header:=xlNo
     Rows.EntireRow.Hidden = False
-    Rows("5:20").RowHeight = 28.8
+    Rows("5:30").RowHeight = 28.8
 
 End If
 End With
