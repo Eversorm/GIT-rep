@@ -23,14 +23,9 @@ Sub calculatesystemproperties()
 'Call the subs calculating entries in the technology sheet
 'Worksheets("User Interface").Protect UserInterfaceOnly:=True
 Application.ScreenUpdating = False
-
 Call Modul1.calcsystemprops
-
 Application.ScreenUpdating = True
-With ThisWorkbook.Worksheets("User Interface").Activate
-End With
 
-EH:
 End Sub
 
 Sub PerformMCA()
@@ -49,7 +44,7 @@ Sub usersguide()
 
 End Sub
 
-Sub ResetExcel()
+Sub ResetExcel()        'sub to check if somethign remained blocked. to be erased
     Application.EnableEvents = True
     Application.ScreenUpdating = True
     MsgBox "Excel events are back online!"
@@ -116,9 +111,11 @@ Worksheets("Schedule and Metabolic").Protect UserInterfaceOnly:=True
 
 'when the mission type is selected it changes the ESM factors
 If Not Intersect(Target, Worksheets("User Interface").Range("MissionType")) Is Nothing Then
+    'Worksheets("User Interface").Protect UserInterfaceOnly:=False
     Application.EnableEvents = False ' avoid infinite loops
     Call SetESMPreset(Worksheets("User Interface").Range("MissionType").Value) ' call the sub
     Application.EnableEvents = True
+    'Worksheets("User Interface").Protect UserInterfaceOnly:=True
 End If
 
 

@@ -1210,7 +1210,7 @@ Dim DES_Function As String
 Dim iTechnologyRow As Integer
 Dim bExcludePartialAlternatives As Boolean
 
-Worksheets("User Interface").Protect UserInterfaceOnly:=True
+'Worksheets("User Interface").Protect UserInterfaceOnly:=True
 
 min_reliability = Worksheets("User Interface").Range("MIN_Reliability").Value
 min_trl = Worksheets("User Interface").Range("MIN_TRL").Value
@@ -1306,7 +1306,6 @@ Dim iMCARow As Integer
 Dim iMCA_MassColumn As Integer
 Dim iMCA_VolumeColumn As Integer
 Dim i As Integer
-Dim p As Integer
 
 
 iHeaderRow = 1
@@ -1400,15 +1399,17 @@ For i = 3 To noe
     End With
 Next i
 
-With ThisWorkbook.Worksheets("User Interface")
-p = 0
-For i = 1 To 7
-    If .Cells(i + 9, "E").Value <> 0 Then p = p + 1
-Next
-End With
 
+' Weight verification
+Dim p As Integer, w As Variant
+p = 0
+' Array of named ranges for weights
+For Each w In Array("WC_Mass", "WC_Volume", "WC_Power", "WC_Cooling", "WC_Maintenance", "WC_Reliability", "WC_TRL")
+    If Worksheets("User Interface").Range(w).Value <> 0 Then p = p + 1
+Next w
 If p = 0 Then
-    MsgBox ("All decision weights set to 0!")
+    MsgBox "All decision weights are set to 0! Please assign priority weights before proceeding.", vbExclamation
     Exit Sub
 End If
+
 End Sub
