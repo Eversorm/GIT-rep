@@ -180,18 +180,6 @@ Private Sub CommandButton_Cancel_Click()
 
 End Sub
 
-Private Sub Frame1_Click()
-
-End Sub
-
-Private Sub Label17_Click()
-
-End Sub
-
-Private Sub Label8_Click()
-
-End Sub
-
 Private Sub TextBox_CRD_Change()
 
 If IsNumeric(IniCons.TextBox_CRD.Value) = False Or IniCons.TextBox_CRD.Value < 0 Then

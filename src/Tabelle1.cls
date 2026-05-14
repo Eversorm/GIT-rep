@@ -49,6 +49,13 @@ Sub usersguide()
 
 End Sub
 
+Sub ResetExcel()
+    Application.EnableEvents = True
+    Application.ScreenUpdating = True
+    MsgBox "Excel events are back online!"
+End Sub
+
+
 ' This sub is called when the mission is selected and it changes the values of the equivalence factors based on assigned presets
 
 Sub SetESMPreset(ByVal mission As String)

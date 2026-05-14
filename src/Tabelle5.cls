@@ -16,7 +16,6 @@ Sub ExecuteMCA()
 Dim Crew_Size As Integer
 Dim mission_duration As Integer
 Dim Schedule_number As Integer
-Dim ECLSS_type As String
 
 'Multi-criteria Analysis
 'Weighting Coefficients
@@ -27,7 +26,6 @@ Dim WeightsMax(1 To 2) As Double
 Crew_Size = Worksheets("User Interface").Range("Crew_Size").Value
 mission_duration = Worksheets("User Interface").Range("Mission_Duration").Value
 Schedule_number = Worksheets("User Interface").Range("Schedule_Number").Value
-ECLSS_type = Worksheets("User Interface").Range("ECLSS_Type").Value
 
 'Weights
 WeightsMin(1) = Worksheets("User Interface").Range("WC_Mass").Value
@@ -58,6 +56,7 @@ Dim ConfidenceFactor As Double
 Dim CurrentScore As Double
 
 noe = Worksheets("MCA ESM").Cells(Rows.Count, 1).End(xlUp).row
+
 
 iHeaderRow = 4
 miColumnsMin = findColumnByName(Array("MCA Value"), "MCA ESM", iHeaderRow)

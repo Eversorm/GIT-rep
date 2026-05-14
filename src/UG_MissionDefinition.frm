@@ -39,6 +39,3 @@ Private Sub CommandButton1_Click()
 
 End Sub
 
-Private Sub UserForm_Click()
-
-End Sub

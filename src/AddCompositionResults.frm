@@ -721,10 +721,6 @@ Private Sub Cancel_Click()
     
 End Sub
 
-Private Sub Results_Change()
-
-End Sub
-
 Private Sub UserForm_Initialize()
 
 Dim i As Integer
