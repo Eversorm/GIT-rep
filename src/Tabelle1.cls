@@ -49,33 +49,91 @@ Sub usersguide()
 
 End Sub
 
+' This sub is called when the mission is selected and it changes the values of the equivalence factors based on assigned presets
+
+Sub SetESMPreset(ByVal mission As String)
+    
+Dim ws As Worksheet
+Set ws = Worksheets("User Interface")
+
+On Error GoTo SafeExit      'safe mechanism
+ws.Unprotect
+    
+    Select Case mission
+    
+        Case "ISS / LEO"
+            ' Valori BVAD Table 4.1 - LEO/ISS
+            ws.Range("ESM_LocationF").Value = 7.3       ' [kg/kg]
+            ws.Range("ESM_VolumeF").Value = 215.5       ' [kg/m3]
+            ws.Range("ESM_PowerF").Value = 87           ' [kg/kW]
+            ws.Range("ESM_CoolingF").Value = 146        ' [kg/kW]
+            ws.Range("ESM_Crew_TimeF").Value = 0.465    ' [kg/CM*h]
+            
+        Case "orbital station"
+            ' Valori BVAD Table 4.1 - LEO/ISS
+            ws.Range("ESM_LocationF").Value = 4447.3       ' [kg/kg]
+            ws.Range("ESM_VolumeF").Value = 215.5       ' [kg/m3]
+            ws.Range("ESM_PowerF").Value = 87           ' [kg/kW]
+            ws.Range("ESM_CoolingF").Value = 146        ' [kg/kW]
+            ws.Range("ESM_Crew_TimeF").Value = 0.465    ' [kg/CM*h]
+            
+        Case "Lunar Surface"
+            ' Valori BVAD Table 4.1 - Lunar Surface
+            ws.Range("ESM_LocationF").Value = 46        ' [kg/kg]
+            ws.Range("ESM_VolumeF").Value = 170.5       ' [kg/m3]
+            ws.Range("ESM_PowerF").Value = 108          ' [kg/kW]
+            ws.Range("ESM_CoolingF").Value = 109        ' [kg/kW]
+            ws.Range("ESM_Crew_TimeF").Value = 1.858    ' [kg/CM*h]
+            
+        Case "Mars trip"
+            ' Valori BVAD Table 4.1 - Mars Surface
+            ws.Range("ESM_LocationF").Value = 1853      ' [kg/kg]
+            ws.Range("ESM_VolumeF").Value = 141         ' [kg/m3]
+            ws.Range("ESM_PowerF").Value = 176          ' [kg/kW]
+            ws.Range("ESM_CoolingF").Value = 176        ' [kg/kW]
+            ws.Range("ESM_Crew_TimeF").Value = 7.432    ' [kg/CM*h]
+    End Select
+    MsgBox "ESM factors updated for: " & mission, vbInformation
+
+SafeExit:
+End Sub
+
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-'This sub informs the user, whether a user defined schedule is already available so that the user does not use a previously defined schedule that may be inappropriate
+'This sub handles dynamic UI updates, worksheet protection, and triggers recalculations
+'based on user selection (Mission Type, Schedule, and Crew size).
 
 'Worksheets("User Interface").Protect UserInterfaceOnly:=True
 Worksheets("Schedule and Metabolic").Protect UserInterfaceOnly:=True
 
+
+'when the mission type is selected it changes the ESM factors
+If Not Intersect(Target, Worksheets("User Interface").Range("MissionType")) Is Nothing Then
+    Application.EnableEvents = False ' avoid infinite loops
+    Call SetESMPreset(Worksheets("User Interface").Range("MissionType").Value) ' call the sub
+    Application.EnableEvents = True
+End If
+
+
 'Check if cell entry has changed
 If Not Intersect(Target, Range("Schedule_Number")) Is Nothing Then
-    If Range("Schedule_Number").Value = 1 Then Worksheets("Schedule and Metabolic").Range("A1") = "Schedule type:" & vbNewLine & vbNewLine & "Default Schedule"
+    If Range("Schedule_Number").Value = 1 Then
+        Worksheets("Schedule and Metabolic").Range("A1") = "Schedule type:" & vbNewLine & vbNewLine & "Default Schedule"
 'Inform the user that a user defined schedule is available or not, if a user defined schedule has been selected in the mission definition
-    If Range("Schedule_Number").Value = 2 Then
+    ElseIf Range("Schedule_Number").Value = 2 Then
         Worksheets("Schedule and Metabolic").Range("A1") = "Schedule type:" & vbNewLine & vbNewLine & "User defined" & vbNewLine & "Schedule"
         If Worksheets("Schedule and Metabolic").Range("B176") = "" Then
             MsgBox ("No user defined schedule in Schedule and Metabolic sheet currently available. It is advised to define the schedule now before proceeding!")
             Exit Sub
-        End If
-        If Worksheets("Schedule and Metabolic").Range("B176") <> "" Then
+        ElseIf Worksheets("Schedule and Metabolic").Range("B176") <> "" Then
             MsgBox ("User defined schedule in Schedule and Metabolic sheet available. Adjust if needed!")
             Exit Sub
         End If
     End If
-
 End If
 
 ' Check if crew has changed
-If Target.Address = "$B$10" Then
+If Not Intersect(Target, Worksheets("User Interface").Range("Crew_Size")) Is Nothing Then
     Call Tabelle3.UpdateScheduleToNumberOfCrew
     Worksheets("Schedule and Metabolic").Range("Schedule_was_Checked").Value = 0
     Worksheets("Schedule and Metabolic").Range("Metabolic_Values_up_to_date").Value = 0

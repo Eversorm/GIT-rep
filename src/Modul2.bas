@@ -30,7 +30,7 @@ Sub info_schedule()
 
 End Sub
 
-Sub WS()
+Sub ws()
 
 If Sheets("ECLSS Composition").Shapes("WS").OLEFormat.Object.Value <> 1 Then
     MsgBox ("This Checkbox must remain enabled!")

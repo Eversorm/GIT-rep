@@ -41,7 +41,7 @@ Dim MD
 Dim Dia_ESM As Chart
 Dim frame As ChartObject
 Dim lastRow
-Dim WS As Worksheet
+Dim ws As Worksheet
 Dim rng As Range
 Dim rg As Range
 Dim MinValue
@@ -59,8 +59,8 @@ MD = Worksheets("User Interface").Range("Mission_Duration").Value
 On Error Resume Next
 ThisWorkbook.Worksheets("Graphical Output").ChartObjects("ESM System Mass").Delete
 
-    Set WS = Worksheets("Output Data")
-        lastRow = WS.Cells(WS.Rows.Count, "B").End(xlUp).row
+    Set ws = Worksheets("Output Data")
+        lastRow = ws.Cells(ws.Rows.Count, "B").End(xlUp).row
             If lastRow < 7 Then
             MsgBox ("Nothing to plot!")
             Exit Sub
