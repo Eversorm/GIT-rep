@@ -483,7 +483,7 @@ Else
     Dim PlantInedibleBiomassGrowth
     Dim PlantEdibleBiomassWaterContent
     Dim PlantEnergyContent
-    Dim PGCGrowthAreas
+    Dim PGCGrowthAreas As Variant
     Dim TotalGrowthArea As Double
     Dim iIndex As Integer
     Dim iI As Integer
@@ -503,75 +503,110 @@ Else
     ' but the reported lunar palace values are missing the corresponding O2, CO2, H2O and inedible biomass values and therefore complemented by BVAD data of similar species
     ' Since chufa is a Monocotyledons like wheat, the values for wheat are used for Chufa
     ' cucumbers uses snap bean data due to the lack of a closer resemblance
-    PlantNames = Array("Cabbage", "Carrot", "Chard", "Celery", "Dry Bean", "Green Onion", "Lettuce", "Onion", "Pea", "Peanut", "Pepper", "Radish", "Red Beet", "Rice", "Snap Bean", "Soybean", "Spinach", "Strawberry", "Sweet Potato", "Tomato", "Wheat", "White Potato", "Chufa", "Cucumber")
+    
+    
+    'PlantNames = Array("Cabbage", "Carrot", "Chard", "Celery", "Dry Bean", "Green Onion", "Lettuce", "Onion", "Pea", "Peanut", "Pepper", "Radish", "Red Beet", "Rice", "Snap Bean", "Soybean", "Spinach", "Strawberry", "Sweet Potato", "Tomato", "Wheat", "White Potato", "Chufa", "Cucumber")
      
-    PlantCarbonContent = Array(0.4, 0.41, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.6, 0.4, 0.4, 0.41, 0.42, 0.4, 0.46, 0.4, 0.43, 0.41, 0.43, 0.42, 0.41, 0.6, 0.4)
+    'PlantCarbonContent = Array(0.4, 0.41, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.6, 0.4, 0.4, 0.41, 0.42, 0.4, 0.46, 0.4, 0.43, 0.41, 0.43, 0.42, 0.41, 0.6, 0.4)
     
-    PlantO2Production = Array(7.19, 16.36, 11.49, 12.24, 30.67, 10.67, 7.78, 12, 32.92, 35.84, 24.71, 11.86, 7.11, 36.55, 36.43, 13.91, 7.78, 25.32, 41.12, 26.36, 56, 32.23, 56, 36.43)
+    'PlantO2Production = Array(7.19, 16.36, 11.49, 12.24, 30.67, 10.67, 7.78, 12, 32.92, 35.84, 24.71, 11.86, 7.11, 36.55, 36.43, 13.91, 7.78, 25.32, 41.12, 26.36, 56, 32.23, 56, 36.43)
     
-    PlantCO2Consumption = Array(9.88, 22.5, 15.79, 16.83, 42.17, 14.67, 10.7, 16.5, 45.26, 49.28, 33.98, 16.31, 9.77, 50.26, 50.09, 19.13, 10.7, 34.82, 56.54, 36.24, 77, 45.23, 77, 50.09)
+    'PlantCO2Consumption = Array(9.88, 22.5, 15.79, 16.83, 42.17, 14.67, 10.7, 16.5, 45.26, 49.28, 33.98, 16.31, 9.77, 50.26, 50.09, 19.13, 10.7, 34.82, 56.54, 36.24, 77, 45.23, 77, 50.09)
     
-    PlantWaterUptake = Array(1.77, 1.77, 1.77, 1.24, 2.53, 1.74, 1.77, 1.74, 2.46, 2.77, 2.77, 1.77, 1.77, 3.43, 2.46, 2.88, 1.77, 2.22, 2.88, 2.77, 11.79, 4, 11.79, 2.46)
-    PlantEdibleBiomassGrowth = Array(75.78, 74.83, 87.5, 103.27, 11.11, 81.82, 131.35, 81.82, 12.2, 5.96, 148.94, 91.67, 32.5, 10.3, 148.5, 5.04, 72.97, 77.88, 51.72, 173.76, 22.73, 105.3, 8.87, 167.17)
-    PlantInedibleBiomassGrowth = Array(6.74, 59.87, 37.69, 11.47, 150, 10, 7.3, 22.5, 161, 168.75, 127.43, 55, 35, 211.58, 178.2, 68.04, 7.3, 144.46, 225, 127.43, 300, 90.25, 300, 178.2)
+    'PlantWaterUptake = Array(1.77, 1.77, 1.77, 1.24, 2.53, 1.74, 1.77, 1.74, 2.46, 2.77, 2.77, 1.77, 1.77, 3.43, 2.46, 2.88, 1.77, 2.22, 2.88, 2.77, 11.79, 4, 11.79, 2.46)
+    'PlantEdibleBiomassGrowth = Array(75.78, 74.83, 87.5, 103.27, 11.11, 81.82, 131.35, 81.82, 12.2, 5.96, 148.94, 91.67, 32.5, 10.3, 148.5, 5.04, 72.97, 77.88, 51.72, 173.76, 22.73, 105.3, 8.87, 167.17)
+    'PlantInedibleBiomassGrowth = Array(6.74, 59.87, 37.69, 11.47, 150, 10, 7.3, 22.5, 161, 168.75, 127.43, 55, 35, 211.58, 178.2, 68.04, 7.3, 144.46, 225, 127.43, 300, 90.25, 300, 178.2)
     ' Water content in %
-    PlantEdibleBiomassWaterContent = Array(92, 88, 92, 90, 10, 89, 95, 89, 12, 5.6, 93, 94, 80, 12, 92, 10, 91, 90, 71, 94, 12, 80, 6.4, 94)
+    'PlantEdibleBiomassWaterContent = Array(92, 88, 92, 90, 10, 89, 95, 89, 12, 5.6, 93, 94, 80, 12, 92, 10, 91, 90, 71, 94, 12, 80, 6.4, 94)
     ' energy content in kj/kg of wet edible plant biomass from USFood Database
-    PlantEnergyContent = Array(1030, 1730, 790, 570, 13930, 1120, 620, 1660, 3390, 23740, 836, 670, 3723, 14940, 1310, 6140, 970, 1360, 3590, 740, 14230, 2880, 16740, 628)
+    'PlantEnergyContent = Array(1030, 1730, 790, 570, 13930, 1120, 620, 1660, 3390, 23740, 836, 670, 3723, 14940, 1310, 6140, 970, 1360, 3590, 740, 14230, 2880, 16740, 628)
     
-    PGCGrowthAreas = Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    'PGCGrowthAreas = Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    ' Size based on PlantNames, filled with zeros
     
+    
+    Call Tabelle12.GetPlantProperties(PlantNames, PlantCarbonContent, PlantO2Production, PlantCO2Consumption, _
+    PlantWaterUptake, PlantEdibleBiomassGrowth, PlantInedibleBiomassGrowth, PlantEdibleBiomassWaterContent, PlantEnergyContent)
+    
+    ReDim PGCGrowthAreas(LBound(PlantNames) To UBound(PlantNames))
+       
     CrewSize = Worksheets("User Interface").Range("Crew_Size").Value
     
     Dim miTechnologyPlantRow
     miTechnologyPlantRow = findRowByName(Array(.PlantGrowthChamberList.Value), "Technology", miTechnologyColumn(1))
     TotalGrowthArea = Worksheets("Technology").Cells(miTechnologyPlantRow(1), miTechnologyColumn(2)).Value
+    
+    
+    ' Pass PlantNames so areas are returned in the correct matching order
+    
 
     If InStr(1, .PlantGrowthChamberList.Value, "Veggie", vbBinaryCompare) Then
-        iIndex = Application.Match("Lettuce", PlantNames, False)
+        iIndex = Application.Match("Lettuce", PlantNames, False) - 1
         iNumberOfUnits = CInt(.PGC_NumberOfUnits.Value)
         ' Here we divide with the crew size because the units are seen as absolut, so for the values to be per CM we have to divide with the crew size
         PGCGrowthAreas(iIndex) = iNumberOfUnits * TotalGrowthArea
         
     ElseIf InStr(1, .PlantGrowthChamberList.Value, "ISPR PGC", vbBinaryCompare) Then
         ' here 50% lettuce and 50% tomato is used
-        iIndex = Application.Match("Lettuce", PlantNames, False)
+        iIndex = Application.Match("Lettuce", PlantNames, False) - 1
         iNumberOfUnits = CInt(.PGC_NumberOfUnits.Value)
+        PGCGrowthAreas(iIndex) = iNumberOfUnits * 0.5 * TotalGrowthArea
         ' Here we divide with the crew size because the units are seen as absolut, so for the values to be per CM we have to divide with the crew size
-        iIndex = Application.Match("Tomato", PlantNames, False)
+        iIndex = Application.Match("Tomato", PlantNames, False) - 1
         PGCGrowthAreas(iIndex) = iNumberOfUnits * 0.5 * TotalGrowthArea
         
-    ElseIf InStr(1, .PlantGrowthChamberList.Value, "Scaled Part ELS PGC", vbBinaryCompare) Then
-        PGCGrowthAreas = Array(0.086938, 1.4094, 0, 0.19232, 3.0823, 1.0959, 0.42152, 0, 0.81932, 0, 0.54797, 0, 0, 0, 0.17651, 0, 1.4437, 0, 9.168, 3.1851, 25.499, 4.252, 0, 0)
-        
-    ElseIf InStr(1, .PlantGrowthChamberList.Value, "Part ELS PGC", vbBinaryCompare) Then
-        PGCGrowthAreas = Array(0.033, 0.535, 0, 0.073, 1.17, 0.416, 0.16, 0, 0.311, 0, 0.208, 0, 0, 0, 0.067, 0, 0.548, 0, 3.48, 1.209, 9.679, 1.614, 0, 0)
-        
-    ElseIf InStr(1, .PlantGrowthChamberList.Value, "Lunar Palace PGC", vbBinaryCompare) Then
-        PGCGrowthAreas = Array(0, 1.9981, 0, 0, 0, 0.39961, 4.3478, 0, 0, 0, 0, 0, 0, 0, 1.5185, 4.4757, 0, 0.79922, 0, 0, 31.969, 0, 7.9922, 0.047953)
-    
-    ElseIf InStr(1, .PlantGrowthChamberList.Value, "ELS PGC", vbBinaryCompare) Then
-        PGCGrowthAreas = Array(0, 1.3476, 0, 0, 4.8423, 0.69392, 0.14331, 0, 0, 12.149, 0, 0.41233, 0, 5.2245, 0, 116.73, 1.5965, 0, 3.7336, 4.1283, 10.653, 2.4991, 0, 0)
-   
-    ElseIf InStr(1, .PlantGrowthChamberList.Value, "Case 1", vbBinaryCompare) Then
-        PGCGrowthAreas = Array(0, 0, 10.551, 0, 0, 0, 30, 0, 0, 4.1116, 14.812, 0, 0, 0, 25.589, 0, 30, 0, 0, 0, 0, 0, 0, 0)
-        
-    ElseIf InStr(1, .PlantGrowthChamberList.Value, "Case 2", vbBinaryCompare) Then
-        PGCGrowthAreas = Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 3.487, 17.004, 0, 0, 0, 32.128, 0, 54.243, 0, 0, 0, 0, 0, 0, 0)
-        
-    ElseIf InStr(1, .PlantGrowthChamberList.Value, "Case 3", vbBinaryCompare) Then
-        PGCGrowthAreas = Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 9.881, 0, 0)
-        
-    ElseIf InStr(1, .PlantGrowthChamberList.Value, "Case 4", vbBinaryCompare) Then
-        PGCGrowthAreas = Array(0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 7.0389, 10, 0, 0, 0, 10, 0, 10, 10, 0, 0)
-        
     Else
-        ' All other chambers are assumed to use the optimized Exploration PGC growth areas
-        PGCGrowthAreas = Array(0, 0, 0, 0, 10, 0, 2, 0, 0, 10, 0, 0, 0, 2, 0, 0, 0, 0, 2, 5, 18, 8, 0, 0)
-        
+        PGCGrowthAreas = Tabelle12.GetPGCAreasByName(.PlantGrowthChamberList.Value, PlantNames)
     End If
+
+' ElseIf InStr(1, .PlantGrowthChamberList.Value, "ISPR PGC", vbBinaryCompare) Then
+'     ' here 50% lettuce and 50% tomato is used
+'     iIndex = Application.Match("Lettuce", PlantNames, False)
+'     iNumberOfUnits = CInt(.PGC_NumberOfUnits.Value)
+'     ' Here we divide with the crew size because the units are seen as absolut, so for the values to be per CM we have to divide with the crew size
+'     iIndex = Application.Match("Tomato", PlantNames, False)
+'     PGCGrowthAreas(iIndex) = iNumberOfUnits * 0.5 * TotalGrowthArea
+'
+' ElseIf InStr(1, .PlantGrowthChamberList.Value, "Scaled Part ELS PGC", vbBinaryCompare) Then
+'     PGCGrowthAreas = Array(0.086938, 1.4094, 0, 0.19232, 3.0823, 1.0959, 0.42152, 0, 0.81932, 0, 0.54797, 0, 0, 0, 0.17651, 0, 1.4437, 0, 9.168, 3.1851, 25.499, 4.252, 0, 0)
+'
+' ElseIf InStr(1, .PlantGrowthChamberList.Value, "Part ELS PGC", vbBinaryCompare) Then
+'     PGCGrowthAreas = Array(0.033, 0.535, 0, 0.073, 1.17, 0.416, 0.16, 0, 0.311, 0, 0.208, 0, 0, 0, 0.067, 0, 0.548, 0, 3.48, 1.209, 9.679, 1.614, 0, 0)
+'
+' ElseIf InStr(1, .PlantGrowthChamberList.Value, "Lunar Palace PGC", vbBinaryCompare) Then
+'     PGCGrowthAreas = Array(0, 1.9981, 0, 0, 0, 0.39961, 4.3478, 0, 0, 0, 0, 0, 0, 0, 1.5185, 4.4757, 0, 0.79922, 0, 0, 31.969, 0, 7.9922, 0.047953)
+'
+' ElseIf InStr(1, .PlantGrowthChamberList.Value, "ELS PGC", vbBinaryCompare) Then
+'     PGCGrowthAreas = Array(0, 1.3476, 0, 0, 4.8423, 0.69392, 0.14331, 0, 0, 12.149, 0, 0.41233, 0, 5.2245, 0, 116.73, 1.5965, 0, 3.7336, 4.1283, 10.653, 2.4991, 0, 0)
+'
+' ElseIf InStr(1, .PlantGrowthChamberList.Value, "Case 1", vbBinaryCompare) Then
+'     PGCGrowthAreas = Array(0, 0, 10.551, 0, 0, 0, 30, 0, 0, 4.1116, 14.812, 0, 0, 0, 25.589, 0, 30, 0, 0, 0, 0, 0, 0, 0)
+'
+' ElseIf InStr(1, .PlantGrowthChamberList.Value, "Case 2", vbBinaryCompare) Then
+'     PGCGrowthAreas = Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 3.487, 17.004, 0, 0, 0, 32.128, 0, 54.243, 0, 0, 0, 0, 0, 0, 0)
+'
+' ElseIf InStr(1, .PlantGrowthChamberList.Value, "Case 3", vbBinaryCompare) Then
+'     PGCGrowthAreas = Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 9.881, 0, 0)
+'
+' ElseIf InStr(1, .PlantGrowthChamberList.Value, "Case 4", vbBinaryCompare) Then
+'     PGCGrowthAreas = Array(0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 7.0389, 10, 0, 0, 0, 10, 0, 10, 10, 0, 0)
+'
+' Else
+'     ' All other chambers are assumed to use the optimized Exploration PGC growth areas
+'     PGCGrowthAreas = Array(0, 0, 0, 0, 10, 0, 2, 0, 0, 10, 0, 0, 0, ```2, 0, 0, 0, 0, 2, 5, 18, 8, 0, 0)
+
+
     ' calculate the CO2 consumption for one m^2 of this plant composition
+    
+    
     baseTotalGrowthArea = WorksheetFunction.Sum(PGCGrowthAreas)
+    
+
+    If baseTotalGrowthArea = 0 Then
+        MsgBox "PGC growth area is zero. Check PGCConfigs table or selected PGC name."
+        Exit Sub
+    End If
+
     CO2ToPlants = 0
     O2FromPlants = 0
     CarbonContentBiomass = 0
