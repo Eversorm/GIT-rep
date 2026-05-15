@@ -119,7 +119,7 @@ If Not Intersect(Target, Worksheets("User Interface").Range("MissionType")) Is N
 End If
 
 
-'Check if cell entry has changed
+'Check if Schedule number cell has changed
 If Not Intersect(Target, Range("Schedule_Number")) Is Nothing Then
     If Range("Schedule_Number").Value = 1 Then
         Worksheets("Schedule and Metabolic").Range("A1") = "Schedule type:" & vbNewLine & vbNewLine & "Default Schedule"
