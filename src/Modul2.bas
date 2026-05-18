@@ -1,5 +1,6 @@
 Attribute VB_Name = "Modul2"
 Option Explicit
+' some table appearances and check box for stuff that must remain enabled
 
 Sub performsensitivityanalysis_up()
 
