@@ -504,58 +504,57 @@ Else
     ' Since chufa is a Monocotyledons like wheat, the values for wheat are used for Chufa
     ' cucumbers uses snap bean data due to the lack of a closer resemblance
     
+
     
-    'PlantNames = Array("Cabbage", "Carrot", "Chard", "Celery", "Dry Bean", "Green Onion", "Lettuce", "Onion", "Pea", "Peanut", "Pepper", "Radish", "Red Beet", "Rice", "Snap Bean", "Soybean", "Spinach", "Strawberry", "Sweet Potato", "Tomato", "Wheat", "White Potato", "Chufa", "Cucumber")
-     
-    'PlantCarbonContent = Array(0.4, 0.41, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.6, 0.4, 0.4, 0.41, 0.42, 0.4, 0.46, 0.4, 0.43, 0.41, 0.43, 0.42, 0.41, 0.6, 0.4)
-    
-    'PlantO2Production = Array(7.19, 16.36, 11.49, 12.24, 30.67, 10.67, 7.78, 12, 32.92, 35.84, 24.71, 11.86, 7.11, 36.55, 36.43, 13.91, 7.78, 25.32, 41.12, 26.36, 56, 32.23, 56, 36.43)
-    
-    'PlantCO2Consumption = Array(9.88, 22.5, 15.79, 16.83, 42.17, 14.67, 10.7, 16.5, 45.26, 49.28, 33.98, 16.31, 9.77, 50.26, 50.09, 19.13, 10.7, 34.82, 56.54, 36.24, 77, 45.23, 77, 50.09)
-    
-    'PlantWaterUptake = Array(1.77, 1.77, 1.77, 1.24, 2.53, 1.74, 1.77, 1.74, 2.46, 2.77, 2.77, 1.77, 1.77, 3.43, 2.46, 2.88, 1.77, 2.22, 2.88, 2.77, 11.79, 4, 11.79, 2.46)
-    'PlantEdibleBiomassGrowth = Array(75.78, 74.83, 87.5, 103.27, 11.11, 81.82, 131.35, 81.82, 12.2, 5.96, 148.94, 91.67, 32.5, 10.3, 148.5, 5.04, 72.97, 77.88, 51.72, 173.76, 22.73, 105.3, 8.87, 167.17)
-    'PlantInedibleBiomassGrowth = Array(6.74, 59.87, 37.69, 11.47, 150, 10, 7.3, 22.5, 161, 168.75, 127.43, 55, 35, 211.58, 178.2, 68.04, 7.3, 144.46, 225, 127.43, 300, 90.25, 300, 178.2)
-    ' Water content in %
-    'PlantEdibleBiomassWaterContent = Array(92, 88, 92, 90, 10, 89, 95, 89, 12, 5.6, 93, 94, 80, 12, 92, 10, 91, 90, 71, 94, 12, 80, 6.4, 94)
-    ' energy content in kj/kg of wet edible plant biomass from USFood Database
-    'PlantEnergyContent = Array(1030, 1730, 790, 570, 13930, 1120, 620, 1660, 3390, 23740, 836, 670, 3723, 14940, 1310, 6140, 970, 1360, 3590, 740, 14230, 2880, 16740, 628)
-    
-    'PGCGrowthAreas = Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-    ' Size based on PlantNames, filled with zeros
-    
-    
+    'Get plant data from Plants table in same sheet
     Call Tabelle12.GetPlantProperties(PlantNames, PlantCarbonContent, PlantO2Production, PlantCO2Consumption, _
     PlantWaterUptake, PlantEdibleBiomassGrowth, PlantInedibleBiomassGrowth, PlantEdibleBiomassWaterContent, PlantEnergyContent)
     
     ReDim PGCGrowthAreas(LBound(PlantNames) To UBound(PlantNames))
+    ' Initialize all areas to 0 as fallback baseline
+    For iI = LBound(PlantNames) To UBound(PlantNames)
+        PGCGrowthAreas(iI) = 0
+    Next iI
        
     CrewSize = Worksheets("User Interface").Range("Crew_Size").Value
     
     Dim miTechnologyPlantRow
     miTechnologyPlantRow = findRowByName(Array(.PlantGrowthChamberList.Value), "Technology", miTechnologyColumn(1))
     TotalGrowthArea = Worksheets("Technology").Cells(miTechnologyPlantRow(1), miTechnologyColumn(2)).Value
+    iNumberOfUnits = CInt(.PGC_NumberOfUnits.Value)
     
+    Dim matchResult As Variant
+    Dim pgcType As String
+    pgcType = .PlantGrowthChamberList.Value
     
-    ' Pass PlantNames so areas are returned in the correct matching order
     
 
-    If InStr(1, .PlantGrowthChamberList.Value, "Veggie", vbBinaryCompare) Then
-        iIndex = Application.Match("Lettuce", PlantNames, False) - 1
+' Process specific predefined PGC setups or call dynamic database lookup
+    If InStr(1, pgcType, "Veggie", vbBinaryCompare) > 0 Then
+        ' Veggie Configuration: 100% Lettuce
+        matchResult = Application.Match("Lettuce", PlantNames, 0)
+        If Not IsError(matchResult) Then
+            PGCGrowthAreas(matchResult - 1 + LBound(PlantNames)) = iNumberOfUnits * TotalGrowthArea
+        Else
+            MsgBox "Error: Lettuce column missing from plant configuration data.", vbCritical
+            Exit Sub
+        End If
+        ' _
+        iIndex = Application.Match("Lettuce", PlantNames, False) _
         iNumberOfUnits = CInt(.PGC_NumberOfUnits.Value)
         ' Here we divide with the crew size because the units are seen as absolut, so for the values to be per CM we have to divide with the crew size
-        PGCGrowthAreas(iIndex) = iNumberOfUnits * TotalGrowthArea
-        
+        'PGCGrowthAreas(iIndex) = iNumberOfUnits * TotalGrowthArea
     ElseIf InStr(1, .PlantGrowthChamberList.Value, "ISPR PGC", vbBinaryCompare) Then
         ' here 50% lettuce and 50% tomato is used
         iIndex = Application.Match("Lettuce", PlantNames, False) - 1
-        iNumberOfUnits = CInt(.PGC_NumberOfUnits.Value)
+        'iNumberOfUnits = CInt(.PGC_NumberOfUnits.Value)
         PGCGrowthAreas(iIndex) = iNumberOfUnits * 0.5 * TotalGrowthArea
         ' Here we divide with the crew size because the units are seen as absolut, so for the values to be per CM we have to divide with the crew size
         iIndex = Application.Match("Tomato", PlantNames, False) - 1
         PGCGrowthAreas(iIndex) = iNumberOfUnits * 0.5 * TotalGrowthArea
         
     Else
+        ' all others configurations getting the datas from the table in the Plants sheet
         PGCGrowthAreas = Tabelle12.GetPGCAreasByName(.PlantGrowthChamberList.Value, PlantNames)
     End If
 
@@ -619,7 +618,7 @@ Else
     Next iI
         
         AlgeaCarbonContent = 0.48
-        CarbonContentBiomass = CarbonContentBiomass + Range("InedibleBiomassPBRValue").Value * AlgeaCarbonContent
+        CarbonContentBiomass = CarbonContentBiomass + .Range("InedibleBiomassPBRValue").Value * AlgeaCarbonContent
     
     If CO2ToPlants * baseTotalGrowthArea > .Range("CO2_ProdCrewValue").Value Then
     
@@ -894,7 +893,7 @@ If .PGCurineTreatmentOption.Value = True Then
         
     Else
         .Range("CrewUrineWithProcessing").Value = .Range("CrewUrineWithProcessing").Value - 0.25 * H2OtoPlants
-        .Range("CrewUrineToPlants").Value = 0.25 * H2OtoPlants
+        .Range("CrewUrineToPlantsValue").Value = 0.25 * H2OtoPlants
         .Range("UrineToPlantsValue") = 0.25 * H2OtoPlants
     End If
 

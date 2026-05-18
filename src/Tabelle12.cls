@@ -37,14 +37,14 @@ Public Sub GetPlantProperties( _
     For Each hCell In lo.HeaderRowRange
         Dim h As String
         h = hCell.Value
-        If InStr(1, h, "Name", vbTextCompare) > 0 Then colName = hCell.Column
+        If InStr(1, h, "PlantName", vbTextCompare) > 0 Then colName = hCell.Column
         If InStr(1, h, "Carbon", vbTextCompare) > 0 Then colCarbon = hCell.Column
-        If InStr(1, h, "O2", vbTextCompare) > 0 And InStr(1, h, "Production", vbTextCompare) > 0 Then colO2 = hCell.Column
-        If InStr(1, h, "CO2", vbTextCompare) > 0 And InStr(1, h, "Consumption", vbTextCompare) > 0 Then colCO2 = hCell.Column
-        If InStr(1, h, "Water", vbTextCompare) > 0 And InStr(1, h, "Uptake", vbTextCompare) > 0 Then colWater = hCell.Column
-        If InStr(1, h, "Edible", vbTextCompare) > 0 And InStr(1, h, "Growth", vbTextCompare) > 0 _
-   And InStr(1, h, "Inedible", vbTextCompare) = 0 Then colEdible = hCell.Column
-        If InStr(1, h, "Inedible", vbTextCompare) > 0 And InStr(1, h, "Growth", vbTextCompare) > 0 Then colInedible = hCell.Column
+        If InStr(1, h, "Production", vbTextCompare) > 0 Then colO2 = hCell.Column  'InStr(1, h, "O2", vbTextCompare) > 0 And
+        If InStr(1, h, "Consumption", vbTextCompare) > 0 Then colCO2 = hCell.Column     'InStr(1, h, "CO2", vbTextCompare) > 0 And
+        If InStr(1, h, "Uptake", vbTextCompare) > 0 Then colWater = hCell.Column   'InStr(1, h, "Water", vbTextCompare) > 0 And
+        If InStr(1, h, "EdibleGrowth", vbTextCompare) > 0 Then colEdible = hCell.Column   'And InStr(1, h, "Growth", vbTextCompare) > 0 _
+   And InStr(1, h, "Inedible", vbTextCompare) = 0
+        If InStr(1, h, "InedibleGrowth", vbTextCompare) > 0 Then colInedible = hCell.Column   'And InStr(1, h, "Growth", vbTextCompare) > 0
         If InStr(1, h, "Water", vbTextCompare) > 0 And InStr(1, h, "Content", vbTextCompare) > 0 Then colWaterContent = hCell.Column
         If InStr(1, h, "Energy", vbTextCompare) > 0 Then colEnergy = hCell.Column
     Next hCell
@@ -74,7 +74,7 @@ Public Sub GetPlantProperties( _
     Dim iPlant As Long
     For iPlant = 0 To nPlants - 1
         Dim r As Long
-        r = lo.DataBodyRange.Rows(iPlant + 1).row
+        r = lo.DataBodyRange.Rows(iPlant + 2).row
         PlantNames(iPlant) = ws.Cells(r, colName).Value
         PlantCarbonContent(iPlant) = ws.Cells(r, colCarbon).Value
         PlantO2Production(iPlant) = ws.Cells(r, colO2).Value
@@ -89,7 +89,7 @@ Public Sub GetPlantProperties( _
 End Sub
 
 'this function gives the values of plants areas for the specific type of PGC when selected in ECLSS composition
-Public Function GetPGCAreasByName(ByVal pgcName As String, ByRef PlantNames As Variant) As Variant
+Public Function OLDGetPGCAreasByName(ByVal pgcName As String, ByRef PlantNames As Variant) As Variant
 
     Dim ws As Worksheet
     Set ws = ThisWorkbook.Worksheets("Plants and PGC")
@@ -154,7 +154,46 @@ Public Function GetPGCAreasByName(ByVal pgcName As String, ByRef PlantNames As V
 End Function
 
 
+Option Explicit
 
+Public Function GetPGCAreasByName(ByVal pgcName As String, ByRef PlantNames As Variant) As Variant
+
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Worksheets("Plants and PGC")
+    Dim lo As ListObject
+    Set lo = ws.ListObjects("PGCConfigs")
+
+    ' 1. find PGC row
+    Dim pgcRowIndex As Long
+    pgcRowIndex = GetTableRowIndex(lo, pgcName, 1)
+    If pgcRowIndex = 0 Then
+        MsgBox "The PGC configuration '" & pgcName & "' was not found!", vbExclamation
+    End If
+
+    ' 2. initialize array
+    Dim areas() As Variant
+    ReDim areas(LBound(PlantNames) To UBound(PlantNames))
+
+    ' 3. fill array with the helpers function to find row and column
+    Dim iPlant As Long
+    Dim colIndex As Long
+    
+    For iPlant = LBound(PlantNames) To UBound(PlantNames)
+        If pgcRowIndex = 0 Then
+            areas(iPlant) = 0
+        Else
+            ' call helper function for the column and get the area value
+            colIndex = GetTableColumnIndex(lo, CStr(PlantNames(iPlant)))
+            If colIndex > 0 Then
+                areas(iPlant) = lo.DataBodyRange.Cells(pgcRowIndex, colIndex).Value
+            Else
+                areas(iPlant) = 0
+            End If
+        End If
+    Next iPlant
+
+    GetPGCAreasByName = areas
+End Function
 
 
 

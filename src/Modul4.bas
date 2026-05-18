@@ -1,4 +1,6 @@
 Attribute VB_Name = "Modul4"
+'helpers used in different sheets to find row and column of the overall sheet or row and column of a table.
+
 
 Public Function findColumnByName(Name As Variant, SpreadSheet As String, iHeaderRow As Integer) As Variant
 ' small helper function to find the column index corresponding to a header. This is used to ensure the correct column is used, even if someone made adjustments to the Spreadsheet!
@@ -45,7 +47,7 @@ Public Function findColumnByName(Name As Variant, SpreadSheet As String, iHeader
 
 End Function
 
-Public Function findRowByName(Name As Variant, SpreadSheet As String, ColumnIndex As Variant) As Variant
+Public Function findRowByName(Name As Variant, SpreadSheet As String, columnIndex As Variant) As Variant
 ' small helper function to find the row index corresponding to a header. This is used to ensure the correct column is used, even if someone made adjustments to the Spreadsheet!
 
     findRowByName = 0
@@ -65,7 +67,7 @@ Public Function findRowByName(Name As Variant, SpreadSheet As String, ColumnInde
     End If
     
     For row = 1 To lastUsedRow
-        CellValue = Worksheets(SpreadSheet).Cells(row, ColumnIndex).Value
+        CellValue = Worksheets(SpreadSheet).Cells(row, columnIndex).Value
         For i = 1 To iNumberOfNames
             If CellValue = Name(i - 1) Then
                 RowsToFind(i) = row
@@ -101,3 +103,19 @@ Public Function findRowByName(Name As Variant, SpreadSheet As String, ColumnInde
     findRowByName = RowsToFind
 End Function
 
+
+Public Function GetTableColumnIndex(ByRef lo As ListObject, ByVal headerName As String) As Long
+    ' Gives relative index of a table (1, 2, 3...) else gives 0
+    On Error Resume Next
+    GetTableColumnIndex = Application.Match(headerName, lo.HeaderRowRange, 0)
+    On Error GoTo 0
+End Function
+
+Public Function GetTableRowIndex(ByRef lo As ListObject, ByVal searchName As String, ByVal columnIndex As Long) As Long
+    ' search a row value in a specific column, else it gives 0
+    If columnIndex <= 0 Then GetTableRowIndex = 0: Exit Function
+    
+    On Error Resume Next
+    GetTableRowIndex = Application.Match(searchName, lo.DataBodyRange.Columns(columnIndex), 0)
+    On Error GoTo 0
+End Function
