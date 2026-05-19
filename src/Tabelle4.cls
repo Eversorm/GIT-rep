@@ -54,6 +54,30 @@ miTechnologyColumnFunction = findColumnByName(TechnologyFunctionHeader, "Technol
 With ThisWorkbook.Worksheets("ECLSS Composition")
 
 ' Unfortunatly I did not find an option to reference these elements using an array of names....
+
+
+'THIS DOESN WROK QUITE FINE HAVE TO CHECK IT OUT TO REMOVE THE LONG LIST BELOW
+
+'Dim ctrl As Object _
+Dim ctrlNames As Variant _
+Dim ctrlName As Variant _
+
+' 1. array with all the names from ListBox _
+ctrlNames = Array("HumidityControlList", "CO2_RemovalList", "CO2ReductionList", _
+                  "O2StorageList", "H2StorageList", "ElectrolysisList", _
+                  "UrineProcessingList", "WWFiltrationList", "ISRUList", _
+                  "BrineProcessingList", "PlantGrowthChamberList", _
+                  "AtmosphereMonitoringList", "TraceContaminantControlList", _
+                  "PBRList", "MethaneProcessingList")
+' 2. cycle to clear it _
+For Each ctrlName In ctrlNames _
+    Set ctrl = .OLEObjects(ctrlName).Object _
+    ctrl.Clear _
+Next ctrlName _
+
+
+
+
 If .HumidityControlList.ListCount > 0 Then
     For iListRow = 1 To Worksheets("ECLSS Composition").HumidityControlList.ListCount
         .HumidityControlList.RemoveItem (0)
@@ -129,6 +153,15 @@ If .MethaneProcessingList.ListCount > 0 Then
         .MethaneProcessingList.RemoveItem (0)
     Next iListRow
 End If
+
+
+If .TraceContaminantControlList.ListCount > 0 Then
+    For iListRow = 1 To .TraceContaminantControlList.ListCount
+        .TraceContaminantControlList.RemoveItem (0)
+    Next iListRow
+End If
+
+
 
 ' Add option none to optional subsystems:
 .CO2ReductionList.AddItem ("None")
@@ -515,13 +548,15 @@ Else
     For iI = LBound(PlantNames) To UBound(PlantNames)
         PGCGrowthAreas(iI) = 0
     Next iI
+    
+'Debug.Print Join(PlantNames, ", ")
        
     CrewSize = Worksheets("User Interface").Range("Crew_Size").Value
     
     Dim miTechnologyPlantRow
     miTechnologyPlantRow = findRowByName(Array(.PlantGrowthChamberList.Value), "Technology", miTechnologyColumn(1))
     TotalGrowthArea = Worksheets("Technology").Cells(miTechnologyPlantRow(1), miTechnologyColumn(2)).Value
-    iNumberOfUnits = CInt(.PGC_NumberOfUnits.Value)
+    iNumberOfUnits = CInt(.PGC_NumberOfUnits.Value) / CrewSize
     
     Dim matchResult As Variant
     Dim pgcType As String
@@ -533,23 +568,12 @@ Else
     If InStr(1, pgcType, "Veggie", vbBinaryCompare) > 0 Then
         ' Veggie Configuration: 100% Lettuce
         matchResult = Application.Match("Lettuce", PlantNames, 0)
-        If Not IsError(matchResult) Then
-            PGCGrowthAreas(matchResult - 1 + LBound(PlantNames)) = iNumberOfUnits * TotalGrowthArea
-        Else
-            MsgBox "Error: Lettuce column missing from plant configuration data.", vbCritical
-            Exit Sub
-        End If
-        ' _
-        iIndex = Application.Match("Lettuce", PlantNames, False) _
-        iNumberOfUnits = CInt(.PGC_NumberOfUnits.Value)
-        ' Here we divide with the crew size because the units are seen as absolut, so for the values to be per CM we have to divide with the crew size
-        'PGCGrowthAreas(iIndex) = iNumberOfUnits * TotalGrowthArea
+        PGCGrowthAreas(matchResult - 1 + LBound(PlantNames)) = iNumberOfUnits * TotalGrowthArea
+        
     ElseIf InStr(1, .PlantGrowthChamberList.Value, "ISPR PGC", vbBinaryCompare) Then
         ' here 50% lettuce and 50% tomato is used
         iIndex = Application.Match("Lettuce", PlantNames, False) - 1
-        'iNumberOfUnits = CInt(.PGC_NumberOfUnits.Value)
         PGCGrowthAreas(iIndex) = iNumberOfUnits * 0.5 * TotalGrowthArea
-        ' Here we divide with the crew size because the units are seen as absolut, so for the values to be per CM we have to divide with the crew size
         iIndex = Application.Match("Tomato", PlantNames, False) - 1
         PGCGrowthAreas(iIndex) = iNumberOfUnits * 0.5 * TotalGrowthArea
         
@@ -557,6 +581,14 @@ Else
         ' all others configurations getting the datas from the table in the Plants sheet
         PGCGrowthAreas = Tabelle12.GetPGCAreasByName(.PlantGrowthChamberList.Value, PlantNames)
     End If
+    
+    
+    
+    
+    
+    Debug.Print (TotalGrowthArea)
+    Debug.Print (pgcType)
+    Debug.Print Join(PGCGrowthAreas, ", ")
 
 ' ElseIf InStr(1, .PlantGrowthChamberList.Value, "ISPR PGC", vbBinaryCompare) Then
 '     ' here 50% lettuce and 50% tomato is used
@@ -1526,6 +1558,10 @@ Private Sub AdditionalSystemConfigButton_Click()
     
 End Sub
 
+Private Sub AtmosphereMonitoringList_Change()
+
+End Sub
+
 Private Sub BrineProcessingList_Change()
 
 With ThisWorkbook.Worksheets("ECLSS Composition")
@@ -1699,6 +1735,10 @@ Sub ECLSSCompUserGuid()
 
 End Sub
 
+Private Sub ComboBox2_Change()
+
+End Sub
+
 Private Sub ElectrolysisList_Change()
 
 With ThisWorkbook.Worksheets("ECLSS Composition")
@@ -1843,10 +1883,11 @@ Sub LoadResults()
 
 End Sub
 
-
-
-
 Private Sub OptionIncinerateInedible_Click()
+
+End Sub
+
+Private Sub PBR_CO2Percentage_Change()
 
 End Sub
 
@@ -2011,6 +2052,10 @@ Else
     
 End If
 End With
+End Sub
+
+Private Sub TraceContaminantControlList_Change()
+
 End Sub
 
 Private Sub UrineProcessingList_Change()
