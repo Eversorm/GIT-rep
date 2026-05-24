@@ -1270,10 +1270,25 @@ If IsEmpty(Worksheets("User Interface").Range("SystemLevelFilter").Value) = True
     Exit Sub
 End If
 
+' exclude alternatives with missing info if it was selected in "User Interface"
 bExcludePartialAlternatives = False
 If Worksheets("User Interface").Range("ExcludePartialAlternatives").Value = "Yes" Then
     bExcludePartialAlternatives = True
 End If
+
+' excludes alternatives before a specific year if it was selected in "User Interface"
+Dim bExcludeYear As Boolean
+Dim selected_year As Long
+Dim tech_year As Variant
+Dim iYearColumn As Integer
+
+bExcludeYear = False
+iYearColumn = findColumnByName(Array("Year"), "Technology", 1)(1)
+If Worksheets("User Interface").Range("ExcludeYear").Value <> "None" Then
+    selected_year = CLng(Worksheets("User Interface").Range("ExcludeYear").Value)
+    bExcludeYear = True
+End If
+
 
 Worksheets("MCA ESM").Cells(3, 1) = "System level:  " & Worksheets("User Interface").Range("SystemLevelFilter").Value
 
@@ -1375,6 +1390,14 @@ For i = 3 To noe
                         bValidSystem = False
                     End If
                 Next iColumn
+            End If
+            
+            ' exclude the tech too old if selected
+            If bExcludeYear Then
+                tech_year = Worksheets("Technology").Cells(iTechnologyRow, iYearColumn).Value
+                If tech_year <> "" And CLng(tech_year) < selected_year Then
+                    bValidSystem = False
+                End If
             End If
         End If
         
