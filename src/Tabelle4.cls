@@ -1895,6 +1895,10 @@ Private Sub PGC_NumberOfUnits_Change()
 
 End Sub
 
+Private Sub PlantGrowthChamberList_BeforeDragOver(ByVal Cancel As MSForms.ReturnBoolean, ByVal Data As MSForms.DataObject, ByVal X As Single, ByVal Y As Single, ByVal DragState As MSForms.fmDragState, ByVal Effect As MSForms.ReturnEffect, ByVal Shift As Integer)
+
+End Sub
+
 Private Sub PlantGrowthChamberList_Change()
 ' Check if the user selected veggie or ISPR PGC and if that is the case show the number of units IF, if not hide it!
 

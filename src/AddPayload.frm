@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} AddPayload 
    Caption         =   "Define Additional Payload"
-   ClientHeight    =   5328
+   ClientHeight    =   5325
    ClientLeft      =   -150
    ClientTop       =   -465
    ClientWidth     =   4845

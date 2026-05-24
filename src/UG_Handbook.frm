@@ -51,9 +51,9 @@ End Sub
 Private Sub CommandButton4_Click()
 
     Unload UG_Handbook
-    UG_ECLSSComposition_1.Width = 500
-    UG_ECLSSComposition_1.Height = 550
-    UG_ECLSSComposition_1.Show
+    UG_ECLSSComposition.Width = 500
+    UG_ECLSSComposition.Height = 550
+    UG_ECLSSComposition.Show
     
 End Sub
 
@@ -61,7 +61,7 @@ Private Sub CommandButton5_Click()
 
     Unload UG_Handbook
     UG_ResupplyModelling.Width = 500
-    UG_ResupplyModelling.Height = 550
+    UG_ResupplyModelling.Height = 350
     UG_ResupplyModelling.Show
     
 End Sub

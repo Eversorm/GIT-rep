@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} UG_PerformSensAnalysis 
    Caption         =   "LiSTOT User's Guide - Sensitivity Analysis"
-   ClientHeight    =   5112
+   ClientHeight    =   5115
    ClientLeft      =   105
    ClientTop       =   450
    ClientWidth     =   9390.001
@@ -24,9 +24,9 @@ End Sub
 Private Sub CommandButton_MCAESM_Click()
 
      Unload UG_PerformSensAnalysis
-     UG_ECLSSComposition_1.Width = 500
-     UG_ECLSSComposition_1.Height = 550
-     UG_ECLSSComposition_1.Show
+     UG_ECLSSComposition.Width = 500
+     UG_ECLSSComposition.Height = 550
+     UG_ECLSSComposition.Show
 
 End Sub
 

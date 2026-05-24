@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} UG_MCAESM_4 
    Caption         =   "LiSTOT User's Guide - MCA/ESM Part 4"
-   ClientHeight    =   6276
+   ClientHeight    =   6285
    ClientLeft      =   105
    ClientTop       =   450
    ClientWidth     =   9390.001

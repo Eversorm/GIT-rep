@@ -879,19 +879,19 @@ Set rngFlightCriticalityIndex = Range(Cells(iHeaderRowFlightCritMatrix + 1, iLas
     End With
 
 Dim i As Integer
-Dim x() As Integer
-ReDim x(0 To maxMissionsServed + 1)
-Dim y() As Integer
-ReDim y(0 To maxMissionsServed + 1)
+Dim X() As Integer
+ReDim X(0 To maxMissionsServed + 1)
+Dim Y() As Integer
+ReDim Y(0 To maxMissionsServed + 1)
 
 For i = 0 To maxMissionsServed + 1
-    x(i) = i
-    y(i) = i
+    X(i) = i
+    Y(i) = i
 Next
 
         With Dia_FCP.SeriesCollection.NewSeries
-            .XValues = x
-            .Values = y
+            .XValues = X
+            .Values = Y
             .Trendlines.Add
             .Trendlines(1).Border.Weight = xlThin
             .Trendlines(1).Border.LineStyle = xlDash

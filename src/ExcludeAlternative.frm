@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ExcludeAlternative 
    Caption         =   "Exclude Alternative"
-   ClientHeight    =   2592
+   ClientHeight    =   2595
    ClientLeft      =   90
    ClientTop       =   375
    ClientWidth     =   7500

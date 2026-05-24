@@ -130,6 +130,13 @@ Public Function GetPGCAreasByName(ByVal pgcName As String, ByRef PlantNames As V
 End Function
 
 
+Sub plantsguide()
 
+    'Worksheets("User Interface").Protect UserInterfaceOnly:=True
+    UG_Plants.Width = 550
+    UG_Plants.Height = 500
+    UG_Plants.Show
+
+End Sub
 
 

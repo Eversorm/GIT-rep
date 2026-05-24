@@ -1,14 +1,14 @@
 VERSION 5.00
-Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} UG_ResupplyModelling 
-   Caption         =   "LiSTOT User's Guide - Resupply Modelling"
-   ClientHeight    =   4140
-   ClientLeft      =   60
-   ClientTop       =   285
-   ClientWidth     =   9180.001
-   OleObjectBlob   =   "UG_ResupplyModelling.frx":0000
+Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} UG_Plants 
+   Caption         =   "UserForm1"
+   ClientHeight    =   6315
+   ClientLeft      =   120
+   ClientTop       =   465
+   ClientWidth     =   11805
+   OleObjectBlob   =   "UG_Plants.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
-Attribute VB_Name = "UG_ResupplyModelling"
+Attribute VB_Name = "UG_Plants"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
@@ -27,5 +27,9 @@ Private Sub CommandButton_Back_Click()
     UG_Handbook.Width = 500
     UG_Handbook.Height = 550
     UG_Handbook.Show
+
+End Sub
+
+Private Sub Label2_Click()
 
 End Sub

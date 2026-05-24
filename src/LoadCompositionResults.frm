@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} LoadCompositionResults 
    Caption         =   "Load Results"
-   ClientHeight    =   2916
+   ClientHeight    =   2925
    ClientLeft      =   -15
    ClientTop       =   -270
    ClientWidth     =   3750

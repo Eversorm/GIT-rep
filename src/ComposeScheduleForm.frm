@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ComposeScheduleForm 
    Caption         =   "Compose Schedule"
-   ClientHeight    =   8112
+   ClientHeight    =   8100
    ClientLeft      =   90
    ClientTop       =   390
    ClientWidth     =   7785

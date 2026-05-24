@@ -70,7 +70,7 @@ Private Sub CommandButton_Proceed_Click()
 Dim Crew_Size
 Dim cell
 Dim i
-Dim y
+Dim Y
 Dim db
 Dim lastcolumn
 Dim row 'row in which Crew Member number is shown
@@ -362,9 +362,9 @@ If Schedule.CheckBox_TS.Value = False Then
         
         For i = 1 To 23
         
-            For y = 1 To Crew_Size
-                Worksheets("Schedule and Metabolic").DropDowns("DB " & i & "," & y).Enabled = False
-            Next y
+            For Y = 1 To Crew_Size
+                Worksheets("Schedule and Metabolic").DropDowns("DB " & i & "," & Y).Enabled = False
+            Next Y
             
         Next i
             
@@ -373,9 +373,9 @@ If Schedule.CheckBox_TS.Value = False Then
             Cells(123, i + 1).Value = 11.5
             Cells(123, i + 1).Interior.ColorIndex = 3
 
-            For y = 1 To 5
-                Cells(110 + y, i + 1).Borders.Weight = xlThin
-            Next y
+            For Y = 1 To 5
+                Cells(110 + Y, i + 1).Borders.Weight = xlThin
+            Next Y
         
             If Cells(111, i + 1).Value = 0 Then
                 Cells(111, i + 1).Interior.ColorIndex = 4

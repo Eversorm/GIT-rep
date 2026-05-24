@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} UG_MCAESM_2 
    Caption         =   "LiSTOT User's Guide - MCA/ESM Part 2"
-   ClientHeight    =   10092
+   ClientHeight    =   10095
    ClientLeft      =   105
    ClientTop       =   450
    ClientWidth     =   9390.001
@@ -36,5 +36,9 @@ Private Sub CommandButton3_Click()
     UG_MCAESM_1.Width = 500
     UG_MCAESM_1.Height = 550
     UG_MCAESM_1.Show
+
+End Sub
+
+Private Sub UserForm_Click()
 
 End Sub
