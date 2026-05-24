@@ -11,7 +11,7 @@ Option Explicit
 
 ' basic design of ECLSS composition:
 ' based on the partial sketch
-' Technologies selectied from drop down menu instead of checkboxes --> no matter if more techs are added IF can remain
+' Technologies selected from drop down menu instead of checkboxes --> no matter if more techs are added IF can remain
 ' add technologies based on technology sheet, as long as they are assemblies and the relevant parameters for that technology type are defined (e.g. efficiency for waste water)
 
 
@@ -47,7 +47,7 @@ Dim csValidSystemsMethaneProcessing
 na = Worksheets("Technology").Range("A1:A1000").Cells.SpecialCells(xlCellTypeConstants).Count + 2
 
 TechnologyFunctionHeader = Array("function1", "function2", "function3", "function4", "function5", "function6", "function7", "function8", "function9", "function10")
-miTechnologyColumn = findColumnByName(Array("Name", "Abbreviation", "Level", "Efficiency"), "Technology", 1)
+miTechnologyColumn = findColumnByName(Array("Name", "Abbreviation", "Level", "Efficiency", "Type"), "Technology", 1)
 miTechnologyColumnFunction = findColumnByName(TechnologyFunctionHeader, "Technology", 1)
 
 ' Remove old entries:
@@ -154,11 +154,11 @@ If .MethaneProcessingList.ListCount > 0 Then
     Next iListRow
 End If
 
-
-If .TraceContaminantControlList.ListCount > 0 Then
-    For iListRow = 1 To .TraceContaminantControlList.ListCount
-        .TraceContaminantControlList.RemoveItem (0)
-    Next iListRow
+' wanted to add pressure control
+'If .TraceContaminantControlList.ListCount > 0 Then _
+    For iListRow = 1 To .TraceContaminantControlList.ListCount _
+        .TraceContaminantControlList.RemoveItem (0) _
+    Next iListRow _
 End If
 
 
@@ -178,9 +178,10 @@ End If
 ' List of valid system for the composition calculation, if you want to add a system, provide the required calculations and add the abbreviation to this list
 csValidSystemsHumidity = Array("CAMRAS", "CCAA", "2BMS")
 csValidSystemsCO2Removal = Array("LiOH", "METOX", "CAMRAS", "2BMS", "4BMS/CDRA", "SAWD", "CDRILS")
-csValidSystemsCO2Reduction = Array("SR/SCRA", "BR")
-csValidSystemsPBR = Array("PBR")
-csValidSystemsMethaneProcessing = Array("PPU", "LPU")
+'csValidSystemsCO2Reduction = Array("SR/SCRA", "BR")
+'csValidSystemsMethaneProcessing = Array("PPU", "LPU")
+
+
 ' csValidSystemsO2Storage = Array("CS", "HPS")
 ' csValidSystemsH2Storage = Array("CS", "HPS")
 ' For Electrolysis, nothing else must be defined, since the basic reactions are always the same!
@@ -211,20 +212,19 @@ For iTechnologyRow = 3 To na
                     .CO2_RemovalList.AddItem (sSystemAbbreviation)
                 End If
                     
-            ElseIf Worksheets("Technology").Cells(iTechnologyRow, miTechnologyColumnFunction(iHeader)).Value = "CO2 Reduction" Then
-                If IsNumeric(Application.Match(sSystemAbbreviation, csValidSystemsCO2Reduction, 0)) Then
+            ElseIf Worksheets("Technology").Cells(iTechnologyRow, miTechnologyColumnFunction(iHeader)).Value = "CO2 Reduction" _
+            And Worksheets("Technology").Cells(iTechnologyRow, miTechnologyColumn(5)).Value <> "plants" Then
+                'If IsNumeric(Application.Match(sSystemAbbreviation, csValidSystemsCO2Reduction, 0)) Then
                     .CO2ReductionList.AddItem (sSystemAbbreviation)
-                End If
+                'End If
                 
             ElseIf Worksheets("Technology").Cells(iTechnologyRow, miTechnologyColumnFunction(iHeader)).Value = "PBR" Then
-                If IsNumeric(Application.Match(sSystemAbbreviation, csValidSystemsPBR, 0)) Then
                     .PBRList.AddItem (sSystemAbbreviation)
-                End If
                 
             ElseIf Worksheets("Technology").Cells(iTechnologyRow, miTechnologyColumnFunction(iHeader)).Value = "Methane Processing" Then
-                If IsNumeric(Application.Match(sSystemAbbreviation, csValidSystemsMethaneProcessing, 0)) Then
+                'If IsNumeric(Application.Match(sSystemAbbreviation, csValidSystemsMethaneProcessing, 0)) Then
                     .MethaneProcessingList.AddItem (sSystemAbbreviation)
-                End If
+                'End If
                 
                 
             ElseIf Worksheets("Technology").Cells(iTechnologyRow, miTechnologyColumnFunction(iHeader)).Value = "Remove or Add Moisture" Then
@@ -248,15 +248,12 @@ For iTechnologyRow = 3 To na
                 End If
                 
             ElseIf Worksheets("Technology").Cells(iTechnologyRow, miTechnologyColumnFunction(iHeader)).Value = "Electrolyse Water" Then
-                
                 .ElectrolysisList.AddItem (sSystemAbbreviation)
                 
             ElseIf Worksheets("Technology").Cells(iTechnologyRow, miTechnologyColumnFunction(iHeader)).Value = "Store Oxygen" Then
-                
                 .O2StorageList.AddItem (sSystemAbbreviation)
                 
             ElseIf Worksheets("Technology").Cells(iTechnologyRow, miTechnologyColumnFunction(iHeader)).Value = "Store Inert Gas" Then
-                
                 .H2StorageList.AddItem (sSystemAbbreviation)
                
             ElseIf Worksheets("Technology").Cells(iTechnologyRow, miTechnologyColumnFunction(iHeader)).Value = "Produce Food a)" Then
@@ -285,6 +282,7 @@ Function CheckSelectedECLSSComposition() As Boolean
 
 CheckSelectedECLSSComposition = True
 
+
 ' Check if schedule is up to date
 If Worksheets("User Interface").Range("Schedule_Number").Value = 2 Then
     If Worksheets("Schedule and Metabolic").Range("Schedule_was_Checked").Value <> 1 Then
@@ -297,6 +295,13 @@ If Worksheets("User Interface").Range("Schedule_Number").Value = 2 Then
         Exit Function
     End If
 End If
+
+
+
+'----------------------------------------------------
+' check if the technologies inside the boxes make physical sense
+' SECTION THAT MUST BE UPDATED EVERY TIME A TECH IS ADDED AS IT CAN INFLEUNCE THE LOGIC OF THE COMPOSITION.
+' look at the examples below to understand
 
 With ThisWorkbook.Worksheets("ECLSS Composition")
 If InStr(1, .HumidityControlList.Value, "CAMRAS", vbBinaryCompare) Or InStr(1, .CO2_RemovalList.Value, "CAMRAS", vbBinaryCompare) Or InStr(1, .HumidityControlList.Value, "2BMS", vbBinaryCompare) Or InStr(1, .CO2_RemovalList.Value, "2BMS", vbBinaryCompare) Then
@@ -319,6 +324,7 @@ If InStr(1, .CO2_RemovalList.Value, "LiOH", vbBinaryCompare) Then
      End If
 End If
 
+' warn that number of units must be an integer
 If InStr(1, .PlantGrowthChamberList.Value, "Veggie", vbBinaryCompare) Or InStr(1, .PlantGrowthChamberList.Value, "ISPR PGC", vbBinaryCompare) Then
     If .PGC_NumberOfUnits <> "" Then
     Else
@@ -328,7 +334,7 @@ If InStr(1, .PlantGrowthChamberList.Value, "Veggie", vbBinaryCompare) Or InStr(1
     End If
 End If
 
-
+'brine processing only when urine is processed
 If InStr(1, .UrineProcessingList.Value, "None", vbBinaryCompare) Then
     If InStr(1, .BrineProcessingList.Value, "None", vbBinaryCompare) Then
     Else
@@ -338,6 +344,8 @@ If InStr(1, .UrineProcessingList.Value, "None", vbBinaryCompare) Then
     End If
 End If
 
+
+'----------------------------------------------------
 ' Check crew metabolic values:
 Dim CrewUrineProduction As Double
 Dim CrewFecesProduction As Double
@@ -395,13 +403,13 @@ End If
 
 ' add leakage
 Dim LeakValues
-
 LeakValues = calculateLeakage
 .Range("O2_LeakageValue").Value = LeakValues(1)
 .Range("N2_LeakageValue").Value = LeakValues(2)
 
 
-'Check if String inputs are Numbers (PGR & PBR) and in correct Range)
+'----------------------------------------------------
+'Check if String inputs are Numbers (PGR & PBR) and in correct Range
 If Not InStr(1, .PlantGrowthChamberList.Value, "None", vbBinaryCompare) Then
     If Not IsNumeric(PGC_NumberOfUnits.Value) Then
         MsgBox ("Please enter a valid Number in 'Number of PGR Units'")
@@ -1739,6 +1747,10 @@ Private Sub ComboBox2_Change()
 
 End Sub
 
+Private Sub ComboBox3_Change()
+
+End Sub
+
 Private Sub ElectrolysisList_Change()
 
 With ThisWorkbook.Worksheets("ECLSS Composition")
@@ -1884,10 +1896,6 @@ Sub LoadResults()
 End Sub
 
 Private Sub OptionIncinerateInedible_Click()
-
-End Sub
-
-Private Sub PBR_CO2Percentage_Change()
 
 End Sub
 
@@ -2056,6 +2064,25 @@ Else
     
 End If
 End With
+End Sub
+
+' update the value of the box depending on the slider
+Private Sub Scroll_CO2PBR_Change()
+    PBR_CO2Percentage.Text = CStr(Scroll_CO2PBR.Value)
+End Sub
+
+' move the slider when you write in the box
+Private Sub PBR_CO2Percentage_Change()
+    Dim v As Variant
+    v = PBR_CO2Percentage.Text
+    
+    ' check if it's empty or outside the range of 0-100
+    If v <> "" And IsNumeric(v) And CLng(v) >= 0 And CLng(v) <= 100 Then
+        Application.EnableEvents = False
+        Scroll_CO2PBR.Value = CLng(v)
+        Application.EnableEvents = True
+    End If
+
 End Sub
 
 Private Sub TraceContaminantControlList_Change()
