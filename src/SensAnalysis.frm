@@ -170,11 +170,11 @@ For iColumn = 1 To iColumnsToAdjust
 Next iColumn
 
 If SensAnalysis.ComboBox_Ana.Value = "MCA" Then
-    ' for the sensitivity analysis of the MCA, we adjust the values in the MCA ESM sheet and then call the Tabelle5.ExecuteMCA macro for the MCA calculation!
-     Tabelle5.ExecuteMCA
+    ' for the sensitivity analysis of the MCA, we adjust the values in the MCA ESM sheet and then call the wsMCA.ExecuteMCA macro for the MCA calculation!
+     wsMCA.ExecuteMCA
 ElseIf SensAnalysis.ComboBox_Ana.Value = "ESM" Then
     ' for the ESM sensitvity analysis, we adjust the values in the MCA sheet, and then call the ESM sub but specify that we want to perform the ESM in the MCA sheet
-    Modul1.esmcalc "MCA ESM"
+    modCalculations.esmcalc "MCA ESM"
 End If
 
 If SensAnalysis.ComboBox_ATxp = "Iterative" Then

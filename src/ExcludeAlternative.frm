@@ -44,7 +44,7 @@ For i = 6 To na + 4
 Next i
 
 ' repeform the MCA using the corresponding sub for it
-Tabelle5.ExecuteMCA
+wsMCA.ExecuteMCA
 
 Unload ExcludeAlternative
 

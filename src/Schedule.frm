@@ -126,7 +126,7 @@ If Schedule.CheckBox_TS.Value = True Then
 
     If Schedule.ComboBox_DT.Value = "Weekday" Then
     
-        Call Tabelle3.Schedule_WD
+        Call wsSchedule.Schedule_WD
         Range("A59").Value = "Weekday"
     
         For i = 1 To Crew_Size
@@ -166,7 +166,7 @@ If Schedule.CheckBox_TS.Value = True Then
     
     If Schedule.ComboBox_DT.Value = "Weekend Day" Then
     
-        Call Tabelle3.Schedule_WendD
+        Call wsSchedule.Schedule_WendD
         Range("A59").Value = "Weekend Day"
         
         For i = 1 To Crew_Size
@@ -262,7 +262,7 @@ If Schedule.CheckBox_TS.Value = False Then
             Range(Cells(111, 2), Cells(115, Crew_Size + 1)).ClearContents
             Range("B128:J176").ClearContents
     
-            Call Tabelle3.Schedule_UD
+            Call wsSchedule.Schedule_UD
             Range("A59").Value = "User defined"
             
                 For i = 1 To Crew_Size
@@ -337,7 +337,7 @@ If Schedule.CheckBox_TS.Value = False Then
         Range(Cells(111, 2), Cells(115, Crew_Size + 1)).ClearContents
         Range("B128:J176").ClearContents
     
-        Call Tabelle3.Schedule_UD
+        Call wsSchedule.Schedule_UD
         Range("A59").Value = "User defined"
         
         With Cells(117, 1)

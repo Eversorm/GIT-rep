@@ -374,7 +374,7 @@ Dim rng As Range
 
 Application.ScreenUpdating = False
 
-Call Tabelle6.CO2Presssures
+Call wsOutData.CO2Presssures
 
 On Error Resume Next
 ThisWorkbook.Worksheets("Graphical Output").ChartObjects("CO2 Removal Power Requirement").Delete

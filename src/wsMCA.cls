@@ -2,7 +2,7 @@ VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
 END
-Attribute VB_Name = "Tabelle5"
+Attribute VB_Name = "wsMCA"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
@@ -112,7 +112,7 @@ For i = 6 To noe
 Next i
 End With
 
-Tabelle5.CalculateMCAandESMRanks
+wsMCA.CalculateMCAandESMRanks
 
 End Sub
 
@@ -297,11 +297,11 @@ Iteration:
             End If
         
             If csAnalysis(iAnalysis) = "MCA" Then
-                ' for the sensitivity analysis of the MCA, we adjust the values in the MCA ESM sheet and then call the Tabelle5.ExecuteMCA macro for the MCA calculation!
-                 Tabelle5.ExecuteMCA
+                ' for the sensitivity analysis of the MCA, we adjust the values in the MCA ESM sheet and then call the wsMCA.ExecuteMCA macro for the MCA calculation!
+                 wsMCA.ExecuteMCA
             ElseIf csAnalysis(iAnalysis) = "ESM" Then
                 ' for the ESM sensitvity analysis, we adjust the values in the MCA sheet, and then call the ESM sub but specify that we want to perform the ESM in the MCA sheet
-                Modul1.esmcalc "MCA ESM"
+                modCalculations.esmcalc "MCA ESM"
             End If
             
             If AdjustmentValuePrevious < (.Cells(iRowToAdjust, iMCAColumn).Value - .Cells(iSecondRankRow, iMCAColumn).Value) * 2 Then
@@ -335,7 +335,7 @@ Iteration:
                      .Cells(iRow, iNameColumn).EntireRow.Delete
                 End If
             Next iRow
-            Tabelle5.CalculateMCAandESMRanks
+            wsMCA.CalculateMCAandESMRanks
             'Set rows height
             Rows("5:20").RowHeight = 28.8
             
