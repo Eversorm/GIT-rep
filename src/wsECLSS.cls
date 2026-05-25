@@ -207,10 +207,11 @@ For iTechnologyRow = 3 To na
 '                    .CO2_RemovalList.AddItem (sSystemAbbreviation & sTabStopString & "(" & sSystemName & ")")
             
             ' "CO2 Removal", "CO2 Reduction", "Process Wastewater a)" , "Process Wastewater c)", "Process Wastewater d)", "Remove or Add Moisture", "Electrolyse Water"
-            If Worksheets("Technology").Cells(iTechnologyRow, miTechnologyColumnFunction(iHeader)).Value = "CO2 Removal" Then
-                If IsNumeric(Application.Match(sSystemAbbreviation, csValidSystemsCO2Removal, 0)) Then
+            If Worksheets("Technology").Cells(iTechnologyRow, miTechnologyColumnFunction(iHeader)).Value = "CO2 Removal" _
+            And Worksheets("Technology").Cells(iTechnologyRow, miTechnologyColumn(5)).Value <> "plants" Then
+                'If IsNumeric(Application.Match(sSystemAbbreviation, csValidSystemsCO2Removal, 0)) Then
                     .CO2_RemovalList.AddItem (sSystemAbbreviation)
-                End If
+                'End If
                     
             ElseIf Worksheets("Technology").Cells(iTechnologyRow, miTechnologyColumnFunction(iHeader)).Value = "CO2 Reduction" _
             And Worksheets("Technology").Cells(iTechnologyRow, miTechnologyColumn(5)).Value <> "plants" Then
